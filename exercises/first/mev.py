@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 # Add the src directory to the system path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 
-from classes import order, venue, market
+from classes import order, venue, market, agent
 
 
 def load_data(file_path):
@@ -25,7 +25,7 @@ def main(file_path):
         Order = []
         Order = order.from_json(str(index), data['orders'][str(index)])
         Orders.append(Order)
-        Order.print_info()
+        #Order.print_info()
 
     # Create the Venues list and instance them from the JSON data
     venues_data = data['venues']
@@ -33,13 +33,24 @@ def main(file_path):
     for venue_name, venue_info in venues_data.items():
         Venue = []
         Venue = venue.from_json(venue_name, venue_info['reserves'])
-        Venue.print_info()
+        #Venue.print_info()
         Venues.append(Venue)
 
     # Initialize the market graph from the list of venues
-    Market = market.from_venues(Venues) 
-    Market.print_graph_info()
-    Market.plot_graph()
+    Market = market(Venues)
+    #Market.print_graph_info()
+    #Market.plot_graph()
+    
+    # 
+    Agent = agent()
+    Agent.read_intent(Orders[0])
+
+    # Print stored intents
+    #Agent.print_order()
+    Agent.read_market(Market)
+    #Agent.plot_strategy()
+    optimal_values, optimal_b_values, optimal_b_sum = Agent.optimize_strategy()
+
 
 
 if __name__ == "__main__":

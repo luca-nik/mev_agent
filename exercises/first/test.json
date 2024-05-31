@@ -1,0 +1,18 @@
+{
+    "orders": {
+        "0": {
+            "sell_token": "RHO",
+            "buy_token": "KAPPA",
+            "limit_sell_amount": "1000",
+            "limit_buy_amount": "900",
+            "partial_fill": false}
+    },
+    "venues": {
+        "AMM_RHO_KAPPA": {
+            "reserves": {
+                "RHO": "10000",
+                "KAPPA": "10000"
+            }
+        }
+    }
+}

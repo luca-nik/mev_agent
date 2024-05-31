@@ -6,3 +6,4 @@ __author__ = 'Luca Nicoli'
 from .order import order
 from .venue import venue
 from .market import market
+from .agent import agent

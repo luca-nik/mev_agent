@@ -1,5 +1,6 @@
 # venue.py
 import json
+import numpy as np
 
 class venue:
     """
@@ -53,10 +54,10 @@ class venue:
         venue
             An instance of the venue class.
         """
-        reserves = {token: int(data[token].replace("_", "")) for token in data}
+        reserves = {token: np.float64(data[token].replace("_", ".")) for token in data}
         return venue(name, reserves)
 
-    def format_with_underscore(self, value):
+    def format_with_underscore(self, value): #TODO
         """
         Formats the atoms amount adding '_' after division 10**18
 

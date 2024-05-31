@@ -1,6 +1,7 @@
 import networkx as nx
 from .venue import venue
 from matplotlib import pyplot as plt
+import sys
 
 class market:
     """
@@ -15,12 +16,14 @@ class market:
     
     Methods:
     --------
-    from_venues(venues):
-        Creates a market instance from a list of venue instances.
     generate_graph():
         Generates a graph from the venues.
     print_graph_info():
         Prints the graph information including nodes and edges.
+    plot_graph():
+        Prints the graph with matplotlib.
+    weight_function(sell_amount, liquidity_sell_token, liquidity_buy_token):
+        Calculates the weight for an edge based on the sell amount and token liquidity.
     """
 
     def __init__(self, venues):
@@ -33,26 +36,8 @@ class market:
             A list containing venue instances.
         """
         self.venues = venues
-        print(self.venues[0].print_info())
         self.graph = nx.Graph()
         self.generate_graph()
-
-    @staticmethod
-    def from_venues(venues):
-        """
-        Creates a market instance from a list of venue instances.
-        
-        Parameters:
-        -----------
-        venues : list
-            A list containing venue instances.
-        
-        Returns:
-        --------
-        market
-            An instance of the market class.
-        """
-        return market(venues)
 
     def generate_graph(self):
         """
@@ -70,8 +55,11 @@ class market:
                     token1 = tokens[i]
                     token2 = tokens[j]
                     if not self.graph.has_edge(token1, token2):
-                        self.graph.add_edge(token1, token2, venues=[venue.name])
+                        self.graph.add_edge(token1, token2, venues=[venue.name],       
+                                            liquidity_token1 = venue.reserves[token1], 
+                                            liquidity_token2 = venue.reserves[token2]) 
                     else:
+                        # If still nameless, name the edge
                         if venue.name not in self.graph[token1][token2]['venues']:
                             self.graph[token1][token2]['venues'].append(venue.name)
 
@@ -107,3 +95,26 @@ class market:
 
         plt.title("Market Graph")
         plt.show()
+
+    @staticmethod
+    def c_prod_amm(sell_amount, liquidity_sell_token, liquidity_buy_token):
+        """
+        Calculates the price function for a constant product amm
+
+        Parameters:
+        -----------
+        sell_amount : int
+            The amount of the sell token.
+        liquidity_sell_token : int
+            The liquidity of the sell token in the venue.
+        liquidity_buy_token : int
+            The liquidity of the buy token in the venue.
+
+        Returns:
+        --------
+        float
+            The calculated buy amount.
+        """
+
+        buy_amount = liquidity_buy_token * (1 - liquidity_sell_token / (liquidity_sell_token + sell_amount))
+        return buy_amount

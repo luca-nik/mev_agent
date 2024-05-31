@@ -1,4 +1,5 @@
 import json
+import numpy as np
 
 class order:
     """
@@ -32,8 +33,8 @@ class order:
         self.order_number = order_number
         self.sell_token = sell_token
         self.buy_token = buy_token
-        self.limit_sell_amount = int(limit_sell_amount.replace("_", ""))
-        self.limit_buy_amount = int(limit_buy_amount.replace("_", ""))
+        self.limit_sell_amount = np.float64(limit_sell_amount.replace("_", "."))
+        self.limit_buy_amount =  np.float64(limit_buy_amount.replace("_", "."))
         self.partial_fill = partial_fill
 
     @staticmethod
@@ -65,7 +66,7 @@ class order:
             data['partial_fill']
         )
 
-    def format_with_underscore(self, value):
+    def format_with_underscore(self, value): #TODO sistemare
         """
         Formats the atoms amount adding '_' after division 10**18
 
