@@ -5,3 +5,4 @@ __author__ = 'Luca Nicoli'
 # Import submodules
 from .order import order
 from .venue import venue
+from .market import market

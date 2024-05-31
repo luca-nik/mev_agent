@@ -2,11 +2,12 @@ import sys
 import os
 import argparse
 import json
+from matplotlib import pyplot as plt
 
 # Add the src directory to the system path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 
-from classes import order, venue
+from classes import order, venue, market
 
 
 def load_data(file_path):
@@ -18,31 +19,27 @@ def main(file_path):
     # Load data from JSON file
     data = load_data(file_path)
 
-    # Create the order list and instance them from the JSON data
-    #Orders = []
-    #for index in data['orders'].keys():
-    #    Order = []
-    #    Order = order.from_json(str(index), data['orders'][str(index)])
-    #    Orders.append(Order)
-    #    Order.print_info()  # This will use the custom print_info method
+    # Create the Orders list and instance them from the JSON data
+    Orders = []
+    for index in data['orders'].keys():
+        Order = []
+        Order = order.from_json(str(index), data['orders'][str(index)])
+        Orders.append(Order)
+        Order.print_info()
 
-    # Create the venu list and instance them from the JSON data
-    #print(data['venues']['AMM_RHO_KAPPA'])
+    # Create the Venues list and instance them from the JSON data
     venues_data = data['venues']
-
+    Venues = []
     for venue_name, venue_info in venues_data.items():
+        Venue = []
         Venue = venue.from_json(venue_name, venue_info['reserves'])
         Venue.print_info()
-    #Venues = []
-    #for index in data['venues'].keys():
-    #    Order = []
-    #    Order = order.from_json(str(index), data['venues'][str(index)])
-    #    Orders.append(Order)
-    #    Order.print_info()  # This will use the custom print_info method
+        Venues.append(Venue)
 
-    #venue = Venue.from_json(data['venues']['AMM_RHO_KAPPA'])
-
-    #print(f"Venue Reserves: {venue.reserves}")
+    # Initialize the market graph from the list of venues
+    Market = market.from_venues(Venues) 
+    Market.print_graph_info()
+    Market.plot_graph()
 
 
 if __name__ == "__main__":
@@ -50,3 +47,4 @@ if __name__ == "__main__":
     parser.add_argument('file_path', type=str, help='Path to the JSON file')
     args = parser.parse_args()
     main(args.file_path)
+
