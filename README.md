@@ -56,3 +56,34 @@ my_venue = venue.from_json("MyTradingVenue", json_data)
 
 # Print venue information
 my_venue.print_info()
+```
+### Market Class
+```python
+from src.classes.market import market
+from src.classes.venue import venue
+
+# Sample JSON data
+json_data_1 = {
+    "ETH": "1000_123456789012345678",
+    "DAI": "5000_987654321098765432"
+}
+
+json_data_2 = {
+    "BTC": "2000_987654321012345678",
+    "USDT": "8000_123456789098765432"
+}
+
+# Create venue instances
+venue1 = venue.from_json("Venue1", json_data_1)
+venue2 = venue.from_json("Venue2", json_data_2)
+
+# Create a market instance
+my_market = market([venue1, venue2])
+
+# Print graph information
+my_market.print_graph_info()
+
+# Plot the market graph
+my_market.plot_graph()
+
+```
