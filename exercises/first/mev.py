@@ -43,7 +43,7 @@ def main(file_path):
     
     # 
     Agent = agent()
-    Agent.read_intent(Orders[0])
+    Agent.read_order(Orders[0])
 
     # Print stored intents
     #Agent.print_order()
