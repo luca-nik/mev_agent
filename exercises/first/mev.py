@@ -33,7 +33,7 @@ def main(file_path):
     for venue_name, venue_info in venues_data.items():
         Venue = []
         Venue = venue.from_json(venue_name, venue_info['reserves'])
-        #Venue.print_info()
+        Venue.print_info()
         Venues.append(Venue)
 
     # Initialize the market graph from the list of venues

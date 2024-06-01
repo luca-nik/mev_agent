@@ -12,7 +12,7 @@ class market:
     venues : list
         A list containing venue instances.
     graph : networkx.Graph
-        A graph where each unique coin is a node and each reserve acts as an edge with properties.
+        A graph where each unique coin is a node and each reserve acts as an edge.
     
     Methods:
     --------

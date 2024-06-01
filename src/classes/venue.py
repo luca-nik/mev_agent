@@ -17,8 +17,6 @@ class venue:
     --------
     from_json(name, data):
         Creates a venue instance from JSON data.
-    format_with_underscore(value):
-        Formats the atoms amount adding '_' after division 10**18
     print_info():
         Prints the venue information in a JSON-like formatted string.
     """
@@ -57,33 +55,12 @@ class venue:
         reserves = {token: np.float64(data[token].replace("_", ".")) for token in data}
         return venue(name, reserves)
 
-    def format_with_underscore(self, value): #TODO
-        """
-        Formats the atoms amount adding '_' after division 10**18
-
-        Parameters:
-        -----------
-        value : str
-            The amount of atoms in string format
-
-        Returns:
-        --------
-        str
-            The formatted string of atoms.
-        """
-        value_str = str(value)
-        if len(value_str) > 18:
-            pos = len(value_str) - 18
-            formatted_value = value_str[:pos] + '_' + value_str[pos:]
-        else:
-            formatted_value = value_str()
-        return formatted_value
 
     def print_info(self):
         """
         Prints the venue information in a JSON-like formatted string.
         """
-        formatted_reserves = {token: self.format_with_underscore(amount) for token, amount in self.reserves.items()}
+        formatted_reserves = {token: f"{amount:.18f}".replace(".","_") for token, amount in self.reserves.items()}
         venue_data = {
             self.name: {
                 "reserves": formatted_reserves
