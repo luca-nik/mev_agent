@@ -3,8 +3,6 @@ from matplotlib import pyplot as plt
 import sys
 from scipy.optimize import minimize, Bounds
 
-
-
 class agent:
     """
     A class to represent a market agent that reads the user intent, reads the market
@@ -218,14 +216,15 @@ class agent:
 
         # Constrain on the amount sold
         def constraint_sell(x):
-            return (self.order["limit_sell_amount"] - sum(x))*10**18 #10**18 to increase the precision
+                
+            return (self.order["limit_sell_amount"] - sum(x))
 
         # Constrain on the amount bought
         def constraint_buy(x):
             total_b = 0
             for i, path in enumerate(self.paths):
                 total_b += self.propagate_along(path, x[i])
-            return (total_b - self.order["limit_buy_amount"])*10**18 #10**18 to increase the precision
+            return (total_b - self.order["limit_buy_amount"])
         
         # Set the constraint dictionary according to the order
         if self.order["partial_fill"]:
@@ -235,6 +234,11 @@ class agent:
             constraints = [{'type': 'eq', 'fun': constraint_sell},    # total_sold  = s_lim
                            {'type': 'ineq', 'fun': constraint_buy}]    # total_bought >= b_lim
 
+        options = {
+            'ftol': 1e-12,  # Convergence tolerance for the objective function
+            'maxiter': 1000  # Maximum number of iterations
+        }
+
 
         # Initial guesses for sell amount through each path
         initial_guess = [0.0] * len(self.paths)
@@ -243,7 +247,7 @@ class agent:
         bounds = Bounds([0.0] * len(self.paths), [self.order["limit_sell_amount"]] * len(self.paths))
 
         # Perform the optimization
-        result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints)
+        result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints, options=options)
 
         # Extract the optimal values
         optimal_values = result.x
@@ -272,11 +276,4 @@ class agent:
             print(string_buy)
             print(" ")
 
-
         return optimal_values, optimal_b_values, optimal_b_sum 
-
-
-
-
-
-

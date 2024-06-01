@@ -3,9 +3,10 @@
         "0": {
             "sell_token": "MU",
             "buy_token": "NU",
-            "limit_sell_amount": "1000_000000000000000000",
-            "limit_buy_amount": "900_000000000000000000",
-            "partial_fill": false}
+            "sell_amount": "1000_000000000000000000",
+            "buy_amount": "900_000000000000000000",
+            "partial_fill": false
+        }
     },
     "venues": {
         "AMM_MU_IOTA": {

@@ -25,7 +25,7 @@ def main(file_path):
         Order = []
         Order = order.from_json(str(index), data['orders'][str(index)])
         Orders.append(Order)
-        #Order.print_info()
+        Order.print_info()
 
     # Create the Venues list and instance them from the JSON data
     venues_data = data['venues']
