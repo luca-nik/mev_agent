@@ -246,6 +246,8 @@ class agent:
         # Bounds for the sell amount through each path
         bounds = Bounds([0.0] * len(self.paths), [self.order["limit_sell_amount"]] * len(self.paths))
 
+        print(" ")
+        print("MEV Agent reporting for duty, ready to maximize the surplus .. or at least trying :)")
         # Perform the optimization
         result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints, options=options)
 
@@ -257,8 +259,9 @@ class agent:
         optimal_b_sum = sum(optimal_b_values)
 
         # Print global information
-        print("The resulting total value sold (via all paths) is: {:.18f}".format(sum(optimal_values)))
-        print("The resulting total value at B (via all paths) is: {:.18f}".format(optimal_b_sum))
+        print(" ")
+        print("The resulting total value sold   (via all paths) is: {:.18f}".format(sum(optimal_values)))
+        print("The resulting total value bought (via all paths) is: {:.18f}".format(optimal_b_sum))
         print("The resulting gamma is: {:.18f}".format(optimal_b_sum - sum(optimal_values)/exch_rate))
 
         print(" ")
@@ -270,8 +273,8 @@ class agent:
             for edge in path:
                 vertices.append(edge['buy_token'])
             path_str = " -> ".join(vertices)
-            string_sell = f"The resulting total value sold via {path_str} is: {val:.18f}"
-            string_buy =f"The resulting total value sold via {path_str} is: {optimal_b_values[i]:.18f}"
+            string_sell = f"The resulting total value sold via   {path_str} is: {val:.18f}"
+            string_buy  = f"The resulting total value bought via {path_str} is: {optimal_b_values[i]:.18f}"
             print(string_sell)
             print(string_buy)
             print(" ")
