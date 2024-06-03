@@ -1,6 +1,4 @@
-### `docs/CLASSES.md`
-
-This file contains detailed documentation about the 
+This file contains detailed documentation about the classes employed in this project
 
 ## Table of Contents
   - [order Class](#order-class)
