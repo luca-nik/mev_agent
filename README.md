@@ -39,6 +39,9 @@ Knowing the user intent, and the possible paths in the market connecting the des
 
 ## Usage
 
+Mettere come si usa ma sopratutto link a come si risolvono gli esercizi.
+Mettere come si usa interface.
+
 ## Documentation
 
 For detailed class documentation, please refer to [CLASSES.md](docs/CLASSES.md).
