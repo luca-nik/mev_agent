@@ -38,8 +38,7 @@ def main(file_path):
 
     # Initialize the market graph from the list of venues
     Market = market(Venues)
-    #Market.print_graph_info()
-    #Market.plot_graph()
+    Market.plot_graph(file='esempio.png', verbose= 'True')
     
     # 
     Agent = agent()

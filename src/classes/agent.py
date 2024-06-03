@@ -139,7 +139,7 @@ class agent:
                         print(f"Venue: {venue}, Sell Token: {token1}, Buy Token: {token2}, Liquidity: {liquidity_sell_token} {token1}, {liquidity_buy_token} {token2}")
 
                     # Construct strategy graph, assign the price_function to the edge (constant product AMM)
-                    self.strategy.add_edge(token1, token2, sell_token=token1, buy_token=token2, venue=venue, price_function=market.c_prod_amm,
+                    self.strategy.add_edge(token1, token2, sell_token=token1, buy_token=token2, venue=venue, price_function=market.price_function,
                                            liquidity_sell_token=liquidity_sell_token, 
                                            liquidity_buy_token=liquidity_buy_token)
 
