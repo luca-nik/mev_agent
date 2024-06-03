@@ -20,8 +20,8 @@ The `order` class is designed to represent a user order in a trading system. It 
 - `limit_sell_amount` (float): The maximum amount of the `sell_token` to sell.
 - `limit_buy_amount` (float): The minimum amount of the `buy_token` to buy.
 - `partial_fill` (bool): Whether partial filling of the order is allowed.
-- `ex_sell_amount` (float): The exact amount of the `sell_token` sold (if available).
-- `ex_buy_amount` (float): The exact amount of the `buy_token` bought (if available).
+- `ex_sell_amount` (float): The executed amount of the `sell_token` sold.
+- `ex_buy_amount` (float): The executed amount of the `buy_token` bought.
 
 ### Methods
 
@@ -34,8 +34,8 @@ The `order` class is designed to represent a user order in a trading system. It 
     - `limit_sell_amount` (str, optional): The maximum amount of the `sell_token` to sell.
     - `limit_buy_amount` (str, optional): The minimum amount of the `buy_token` to buy.
     - `partial_fill` (bool, optional): Whether partial filling of the order is allowed.
-    - `ex_sell_amount` (str, optional): The exact amount of the `sell_token` sold.
-    - `ex_buy_amount` (str, optional): The exact amount of the `buy_token` bought.
+    - `ex_sell_amount` (str, optional): The executed amount of the `sell_token` sold.
+    - `ex_buy_amount` (str, optional): The executed amount of the `buy_token` bought.
 
 #### `from_json(order_number, data)`
   - Creates an `order` instance from JSON data.
