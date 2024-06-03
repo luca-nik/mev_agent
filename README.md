@@ -49,7 +49,7 @@ Knowing the user intent, and the possible paths in the market connecting the des
 
 ## Documentation
 
-For detailed class documentation, please refer to [docs/CLASSES.md](CLASSES.md).
+For detailed class documentation, please refer to [CLASSES.md](docs/CLASSES.md).
 
 ### `order` Class
 
