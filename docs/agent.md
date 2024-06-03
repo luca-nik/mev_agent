@@ -31,7 +31,7 @@ Evaluates paths in the market connecting `sell_token` with `buy_token` of the cu
 - `verbose` (bool, optional): Prints additional information. Default is `False`.
 
 ### `make_strategy(self, path, market, verbose=False)`
-Given a market path, identifies the venues to visit and the sell and buy tokens for each venue. Constructs the strategy graph and stores the edges for future propagation.
+Given a market path, identifies the venues to visit and the sell and buy tokens for each venue. Updates the the strategy graph including this path and stores the edges for future propagation.
 
 **Parameters:**
 - `path` (list): The list of tokens representing the path.
