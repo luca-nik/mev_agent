@@ -1,9 +1,6 @@
 ### `docs/CLASSES.md`
 
-This file contains detailed documentation about your classes. This keeps your main `README.md` clean and focuses on high-level information, while still providing a place for more in-depth technical documentation.
-
-```markdown
-# Class Documentation
+This file contains detailed documentation about the 
 
 ## `order` Class
 
