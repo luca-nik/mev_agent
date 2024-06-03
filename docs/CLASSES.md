@@ -5,5 +5,5 @@ This documentation provides details on the various classes used in the MEV Agent
 - [order Class](order.md)
 - [venue Class](venue.md)
 - [market Class](market.md)
-
+- [agent Class](agent.md)
 
