@@ -140,7 +140,7 @@ def main(file_path):
     optimal_values, optimal_b_values, optimal_b_sum = Agent.optimize_strategy()
 
     Agent.print_results(file=file_path.split('.json')[0]+'-results.json')
-
+```
 
 # Class Documentation
 
