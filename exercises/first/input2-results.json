@@ -1,14 +1,14 @@
 {
     "venues": {
         "AMM_TAU_PI": {
-            "sell_token": "PI",
-            "buy_token": "TAU",
+            "sell_token": "TAU",
+            "buy_token": "PI",
             "ex_buy_amount": "1000_000000000000000000",
             "ex_sell_amount": "1818_181818181818698577"
         },
         "AMM_PI_PSI": {
-            "sell_token": "PSI",
-            "buy_token": "PI",
+            "sell_token": "PI",
+            "buy_token": "PSI",
             "ex_buy_amount": "1818_181818181818698577",
             "ex_sell_amount": "1081_081081081082174933"
         }

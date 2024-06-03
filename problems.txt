@@ -1,0 +1,8 @@
+in excersie 1, json input 1, in the results the sell and buy token of the venue are switched. Venue should sell KAPPA and buy RHO
+The jsons have a trailing commma after "partial_fill": false, that I erased it.
+In the last JSON the ex_buy and ex_sell for the venues are inverted in order with respect to the other jsons.
+
+
+
+
+
