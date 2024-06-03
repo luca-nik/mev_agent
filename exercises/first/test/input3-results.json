@@ -3,26 +3,26 @@
         "AMM_MU_IOTA": {
             "sell_token": "IOTA",
             "buy_token": "MU",
-            "ex_buy_amount": "289_120006524611255827",
-            "ex_sell_amount": "561_991708409024226967"
+            "ex_buy_amount": "784_921053746501002024",
+            "ex_sell_amount": "1455_589799563403630600"
         },
         "AMM_MU_RHO": {
             "sell_token": "RHO",
             "buy_token": "MU",
-            "ex_buy_amount": "0_000000000000000025",
+            "ex_buy_amount": "0_000000000000000001",
             "ex_sell_amount": "0_000000000000000000"
         },
         "AMM_MU_CHI": {
             "sell_token": "CHI",
             "buy_token": "MU",
-            "ex_buy_amount": "710_879993475388687330",
-            "ex_sell_amount": "671_122685926031067538"
+            "ex_buy_amount": "215_078946253498997976",
+            "ex_sell_amount": "211_291909483204875642"
         },
         "AMM_IOTA_NU": {
             "sell_token": "NU",
             "buy_token": "IOTA",
-            "ex_buy_amount": "561_991708409024226967",
-            "ex_sell_amount": "357_774322750772341806"
+            "ex_buy_amount": "1455_589799563403630600",
+            "ex_sell_amount": "892_795764583884079002"
         },
         "AMM_RHO_NU": {
             "sell_token": "NU",
@@ -33,8 +33,8 @@
         "AMM_CHI_NU": {
             "sell_token": "NU",
             "buy_token": "CHI",
-            "ex_buy_amount": "671_122685926031067538",
-            "ex_sell_amount": "943_372181651277401215"
+            "ex_buy_amount": "211_291909483204875642",
+            "ex_sell_amount": "310_379790367630846504"
         }
     },
     "orders": {
@@ -44,7 +44,7 @@
             "sell_amount": "1000_000000000000000000",
             "buy_token": "NU",
             "sell_token": "MU",
-            "ex_buy_amount": "1301_146504402049686178",
+            "ex_buy_amount": "1203_175554951514868662",
             "ex_sell_amount": "1000_000000000000000000"
         }
     }
