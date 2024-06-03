@@ -20,10 +20,17 @@ This project involves developing a Maximal Extractable Value (MEV) agent designe
 ## Overview
 
 This project is designed to simulate a market with multiple trading venues, each with its own liquidity pools. The main components are:
-- `Venue`: Represents a trading venue with token reserves.
-- `Market`: Represents a market of trading venues and generates a graph of token pairs.
-- `Agent`: Represents a market agent that formulates and optimizes trading strategies.
 - `Order`: Represents an order with user intent for trading.
+- `Venue`: Represents a trading venue with token reserves.
+- `Market`: Represents a market of trading venues, it is a graph with tokens at the vertices and venues at the edges.
+- `Agent`: Represents a market agent that formulates and optimizes trading strategies.
+
+The idea is that given a user `Order` containing the intent of buying `token1` selling `token2`, with the worst acceptable exchange rate, `Agent` will read `Market` and construct a `strategy` to exchange such tokens.
+`strategy` is a directed graph connecting the nodes of the different tokens by means of edges, which are the venues where the tokens at the corresponding nodes can be exchanged. 
+The graph direction is from `token1` to `token2`.
+
+Knowing the user intent, and the possible paths in the market connecting the desired user tokens, `Agent` can now search for the optimal coin exchange among the directed paths to maximize the user surplus. 
+
 
 ## Installation
 
