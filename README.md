@@ -47,6 +47,10 @@ Knowing the user intent, and the possible paths in the market connecting the des
 
 ## Usage
 
+## Documentation
+
+For detailed class documentation, please refer to [CLASSES.md](CLASSES.md).
+
 ### `order` Class
 
 The `order` class is designed to represent a user order in a trading system. It encapsulates all necessary details about the order, including the tokens being traded, the amounts, and whether partial fills are allowed.
