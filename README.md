@@ -25,15 +25,7 @@ The graph direction is from `token1` to `token2`.
 ![Diagram](docs/images/example_strategy.png)
 Knowing the user intent, and the possible paths in the market connecting the desired user tokens, `Agent` can now search for the optimal coin exchange among the directed paths to maximize the user surplus. 
 
-We want to maximize \(\Gamma(s)\), where \(\Gamma(s) = s - \frac{b(s)}{\pi}\), under the constraint that \(s \leq s_{\text{max}}\) and \(b(s) \geq b_{\text{min}}\):
-
-\[
-\begin{aligned}
-& \text{maximize} \quad \Gamma(s) = s - \frac{b(s)}{\pi} \\
-& \text{subject to} \quad s \leq s_{\text{max}}, \quad b(s) \geq b_{\text{min}}
-\end{aligned}
-\]
-
+![Equation](docs/images/surplus_maximization_equation.png)
 
 
 ## Installation
