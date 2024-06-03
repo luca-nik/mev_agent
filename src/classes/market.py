@@ -99,15 +99,15 @@ class market:
                 print(edge)
 
     @staticmethod
-    def price_function(sell_amount, liquidity_sell_token, liquidity_buy_token, market_type='constant_product'):
+    def price_function(coin_amount, liquidity_sell_token, liquidity_buy_token, market_type='constant_product', what_='buy'):
         """
         Calculate the amount of tokens bought in a specific liquidity pool given the sell amount, the type of
         Automated Market Maker (AMM) of the pool, and the initial liquidities of the buy and sell tokens.
 
         Parameters
         ----------
-        sell_amount : int
-            The amount of the sell token to be exchanged.
+        coin_amount : int
+            The amount of the token either bought or sold by the AMM
         liquidity_sell_token : int
             The current liquidity of the sell token in the liquidity pool.
         liquidity_buy_token : int
@@ -116,6 +116,10 @@ class market:
             The type of AMM mechanism used by the liquidity pool. Default is 'constant_product'.
             Supported values:
             - 'constant_product': Uses the constant product formula (x * y = k) for price calculation.
+        what_ : str, optional
+            The type of operation performed by the AMM
+            Supported values:
+            - 'buy', 'sell' if AMM either is buying or selling
 
         Returns
         -------
@@ -128,8 +132,12 @@ class market:
             If an unsupported market type is provided.
         """
         if market_type == 'constant_product':
-            buy_amount = liquidity_buy_token * (1 - liquidity_sell_token / (liquidity_sell_token + sell_amount))
+            if what_ == 'buy': 
+                buy_amount = liquidity_buy_token * (1 - liquidity_sell_token / (liquidity_sell_token + coin_amount))
+                return buy_amount
+            if what_ == 'sell':
+                sell_amount = -liquidity_sell_token * (1 - liquidity_buy_token / (liquidity_buy_token - coin_amount))
+                return sell_amount
         else:
             raise ValueError(f"Unsupported market type: {market_type}")
 
-        return buy_amount

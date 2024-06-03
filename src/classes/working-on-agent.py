@@ -186,9 +186,14 @@ class agent:
             The final value after propagation (i.e. the amount of buy_coin of the order bought along that path)
         """
         current_value = initial_sell_coin_amount
-        prec = 1 #debbugging
+        prec = 1
         for edge_data in path:
+            #string = 'with ' + str(current_value*prec) +  ' buy '
             current_value = edge_data['price_function'](current_value, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token']*prec)
+            #string += str(current_value)
+            #inverse_buy = edge_data['price_function'](current_value/prec, edge_data['liquidity_sell_token']*prec, edge_data['liquidity_buy_token'], what_='sell')
+            #string += ' inverse ' + str(inverse_buy)
+            #print(string)
             current_value /= prec
         return current_value
 
@@ -226,24 +231,23 @@ class agent:
             return (total_b - self.order.limit_buy_amount)
         
         #
-        def coin_conservation(x,print_=False):
+        def constraint_continuity(x,print_=False):
             error = 0
-            prec = 1 #debugging puroposes
+            prec = 1
             for i,path in enumerate(self.paths):
                 sell_amount = x[i]
                 for index, edge_data in enumerate(path):
                     string = 'with ' + str(sell_amount) +  ' buy '
-                    # Compute amount bought in this edge
+
                     buy_amount = edge_data['price_function'](sell_amount, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token']*prec,what_='buy')
+
                     string += str(buy_amount/prec)
 
-                    # What is the amunt sold corresponding to this amount bought
                     inverse_buy = edge_data['price_function'](buy_amount/prec, edge_data['liquidity_sell_token']*prec, edge_data['liquidity_buy_token'], what_='sell')
-                    
-                    # Check conservation error
-                    error += abs(sell_amount*prec - inverse_buy)
+                    error += sell_amount*prec - inverse_buy
 
                     sell_amount = buy_amount/prec
+
                     string += ' inverse ' + str(inverse_buy/prec)
                     if print_:
                         print(string)
@@ -252,57 +256,70 @@ class agent:
         
         # Set the constraint dictionary according to the order
         if self.order.partial_fill:
-            constraints = [{'type': 'ineq', 'fun': constraint_sell}]  # total_sold <= s_lim
+            constraints = [{'type': 'ineq', 'fun': constraint_sell},  # total_sold <= s_lim
+                           {'type': 'ineq', 'fun': constraint_buy}]    # total_bought >= b_lim
         else: #Fly-or-kill
-            constraints = [{'type': 'eq', 'fun': constraint_sell}]    # total_sold  = s_lim
-        
+            constraints = [{'type': 'eq', 'fun': constraint_sell}]#,    # total_sold  = s_lim
+                           #{'type': 'ineq', 'fun': constraint_buy}]    # total_bought >= b_lim
 
+        #nlc1 = NonlinearConstraint(constraint_sell, 0, 0)
         nlc2 = NonlinearConstraint(constraint_buy, 0, np.inf)
+        nlc3 = NonlinearConstraint(constraint_continuity, -10**-16, 10**-16)
+        #constraints = [nlc1, nlc2]#, nlc3]
         constraints.append(nlc2)
+        #constraints.append(nlc3)
 
         options = {
             'ftol': 1e-18,  # Convergence tolerance for the objective function
             'maxiter': 100000  # Maximum number of iterations
         }
 
+        continue_ = True
         print(" ")
         print("MEV Agent reporting for duty, ready to maximize the surplus .. or at least trying :)")
-        # Initial guesses for sell amount through each path
-        initial_guess = [0.0] * len(self.paths)
+        while continue_:
+            # Initial guesses for sell amount through each path
+            initial_guess = [0.0] * len(self.paths)
 
-        # Bounds for the sell amount through each path
-        bounds = Bounds([0.0] * len(self.paths), [self.order.limit_sell_amount] * len(self.paths))
-
-
-        result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints, options=options)
+            # Bounds for the sell amount through each path
+            bounds = Bounds([0.0] * len(self.paths), [self.order.limit_sell_amount] * len(self.paths))
 
 
-        # Extract the optimal values
-        optimal_coins_sell = result.x
+            result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints, options=options)
 
-        # Compute the resulting values along the paths
-        optimal_coins_buy = [self.propagate_along(self.paths[i], optimal_coins_sell[i]) for i in range(len(self.paths))]
-        
-        # Compute the coin conservation error
-        error = coin_conservation(optimal_coins_sell)
+
+            # Extract the optimal values
+            optimal_coins_sell = result.x
+
+            # Compute the resulting values along the paths
+            optimal_coins_buy = [self.propagate_along(self.paths[i], optimal_coins_sell[i]) for i in range(len(self.paths))]
+            error = constraint_continuity(optimal_coins_sell, print_=True)
+            print(error)
+            
+            # Check we are not trying to buy with zero-money
+            index_of_zero = next((i for i, entry in enumerate(optimal_coins_buy) if entry == 0), -1)
+            if index_of_zero != -1:
+                self.paths.pop(index_of_zero)
+                print(index_of_zero)
+            else:
+                continue_ = False
+
 
         total_sell = sum(optimal_coins_sell)
         total_buy = sum(optimal_coins_buy)
 
-        print(" ")
         print("Status:", result.status)
         print("Message:", result.message)
         print("Number of Iterations:", result.nit)
         print("Number of Function Evaluations:", result.nfev)
         print("Number of Gradient Evaluations:", result.njev)
-        print(" ")
 
         # Print global information
         print(" ")
         print("The resulting total value sold   (via all paths) is: {:.18f}".format(total_sell))
         print("The resulting total value bought (via all paths) is: {:.18f}".format(total_buy))
         print("The resulting gamma is: {:.18f}".format(total_buy - total_sell/exch_rate))
-        print("Total coin conservation error: {:.18f}".format(error))
+
         print(" ")
 
         # Print path specific information
