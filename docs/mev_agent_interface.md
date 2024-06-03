@@ -42,7 +42,7 @@ Create a list of `venue` instances from the loaded JSON data.
 
 ### `main(file_path)`
 
-Main function to process the JSON file and create the market graph.
+Main function to optimize the surplus given the orders and the venues in the json file
 
 **Parameters:**
 - `file_path` (str): The path to the JSON file.
