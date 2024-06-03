@@ -2,6 +2,12 @@
 
 This file contains detailed documentation about the 
 
+## Table of Contents
+  - [order Class](#order-class)
+  - [venue Class](#venue-class)
+  - [market Class](#market-class)
+  - [agent Class](#agent-class)
+
 ## `order` Class
 
 The `order` class is designed to represent a user order in a trading system. It encapsulates all necessary details about the order, including the tokens being traded, the amounts, and whether partial fills are allowed.
