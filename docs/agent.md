@@ -6,7 +6,7 @@ The `agent` class represents a market agent that reads user intent, analyzes the
 
 - `order` (order): An `order` object to store the current order information.
 - `venues` (list): A list containing venue instances.
-- `strategy` (nx.DiGraph): A directed graph to store the paths from `sell_token` to `buy_token`.
+- `strategy` (nx.DiGraph): A directed graph of token (vertices) and venues (edges) from `sell_token` to `buy_token`.
 - `paths` (list): A list of the paths from `sell_token` to `buy_token`.
 
 ## Methods
