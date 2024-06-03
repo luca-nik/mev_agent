@@ -2,8 +2,8 @@
 
 This documentation provides details on the various classes used in the MEV Agent project.
 
-- [Order Class](order.md)
-- [Venue Class](venue.md)
-
+- [order Class](order.md)
+- [venue Class](venue.md)
+- [market Class](market.md)
 
 
