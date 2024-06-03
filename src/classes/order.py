@@ -1,5 +1,6 @@
 import json
 import numpy as np
+import copy
 
 class order:
     """
@@ -96,15 +97,21 @@ class order:
             Order.ex_sell_amount = 0.0
 
         if 'ex_buy_amount' in data:
-            Order.ex_buy_amount = np.float63(data['ex_buy_amount'].replace("_","."))
+            Order.ex_buy_amount = np.float64(data['ex_buy_amount'].replace("_","."))
         else:
             Order.ex_buy_amount = 0.0
 
         return Order
 
-    def print_info(self):
+    def print_info(self,file=None):
         """
         Prints the order information in a JSON-like formatted string.
+        If a file path is provided, writes the output to the file.
+
+        Parameters:
+        -----------
+        file : str, optional
+            The file path where the output should be written. If None, prints to console.
         """
         if self.ex_sell_amount == 0.0:
             order_data = {
@@ -128,4 +135,11 @@ class order:
                     "ex_buy_amount":  f"{self.ex_buy_amount:.18f}".replace(".","_")
                 }
             }
-        print(json.dumps(order_data, indent=4))
+
+        output = json.dumps(order_data, indent=4)
+
+        if file:
+            with open(file, 'w') as f:
+                f.write(output)
+        else:
+            print(output)

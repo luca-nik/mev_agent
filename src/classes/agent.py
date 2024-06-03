@@ -2,6 +2,9 @@ import networkx as nx
 from matplotlib import pyplot as plt
 import sys
 from scipy.optimize import minimize, Bounds
+import copy
+import numpy as np
+import json
 
 class agent:
     """
@@ -10,8 +13,10 @@ class agent:
     
     Attributes:
     -----------
-    order : dict
-        A dictionary to store the current order information.
+    order : order
+        A order object to store the current order information.
+    venues : list
+        A list containing venue instances.
     strategy : nx.DiGraph
         A directed graph to store the paths from sell_token to buy_token, we call it strategy
     paths : list
@@ -39,10 +44,11 @@ class agent:
         Constructs all the necessary attributes for the agent object.
         """
         self.order = None
+        self.venues = None
         self.strategy = None
         self.paths = None
 
-    def read_order(self, order):
+    def read_order(self, Order):
         """
         Reads an order object and stores the associated information.
         
@@ -51,14 +57,7 @@ class agent:
         order : order
             The order object containing the user intent.
         """
-        self.order = {
-            "order_number": order.order_number,
-            "sell_token": order.sell_token,
-            "buy_token": order.buy_token,
-            "limit_sell_amount": order.limit_sell_amount,
-            "limit_buy_amount": order.limit_buy_amount,
-            "partial_fill": order.partial_fill
-        }
+        self.order = copy.copy(Order)
 
     def print_order(self):
         """
@@ -86,8 +85,9 @@ class agent:
             print("No order to evaluate.")
             return
 
-        sell_token = self.order["sell_token"]
-        buy_token = self.order["buy_token"]
+        sell_token = self.order.sell_token
+        buy_token =  self.order.buy_token
+        self.venues = copy.copy(market.venues)
         try:
             # Gett all simple paths from initial sell_token to final buy_token
             paths = list(nx.all_simple_paths(market.graph, source=sell_token, target=buy_token))
@@ -203,7 +203,7 @@ class agent:
         """
         
         # Compute the worst exchange rate acceptable
-        exch_rate = self.order["limit_sell_amount"]/self.order["limit_buy_amount"]
+        exch_rate = self.order.limit_sell_amount/self.order.limit_buy_amount
 
         # Define the surplus function to be maximized
         def surplus(x):
@@ -217,17 +217,17 @@ class agent:
         # Constrain on the amount sold
         def constraint_sell(x):
                 
-            return (self.order["limit_sell_amount"] - sum(x))
+            return (self.order.limit_sell_amount - sum(x))
 
         # Constrain on the amount bought
         def constraint_buy(x):
             total_b = 0
             for i, path in enumerate(self.paths):
                 total_b += self.propagate_along(path, x[i])
-            return (total_b - self.order["limit_buy_amount"])
+            return (total_b - self.order.limit_buy_amount)
         
         # Set the constraint dictionary according to the order
-        if self.order["partial_fill"]:
+        if self.order.partial_fill:
             constraints = [{'type': 'ineq', 'fun': constraint_sell},  # total_sold <= s_lim
                            {'type': 'ineq', 'fun': constraint_buy}]    # total_bought >= b_lim
         else: #Fly-or-kill
@@ -244,7 +244,7 @@ class agent:
         initial_guess = [0.0] * len(self.paths)
 
         # Bounds for the sell amount through each path
-        bounds = Bounds([0.0] * len(self.paths), [self.order["limit_sell_amount"]] * len(self.paths))
+        bounds = Bounds([0.0] * len(self.paths), [self.order.limit_sell_amount] * len(self.paths))
 
         print(" ")
         print("MEV Agent reporting for duty, ready to maximize the surplus .. or at least trying :)")
@@ -252,31 +252,133 @@ class agent:
         result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints, options=options)
 
         # Extract the optimal values
-        optimal_values = result.x
+        optimal_coins_sell = result.x
 
         # Compute the resulting values along the paths
-        optimal_b_values = [self.propagate_along(self.paths[i], optimal_values[i]) for i in range(len(self.paths))]
-        optimal_b_sum = sum(optimal_b_values)
+        optimal_coins_buy = [self.propagate_along(self.paths[i], optimal_coins_sell[i]) for i in range(len(self.paths))]
+        total_sell = sum(optimal_coins_sell)
+        total_buy = sum(optimal_coins_buy)
 
         # Print global information
         print(" ")
-        print("The resulting total value sold   (via all paths) is: {:.18f}".format(sum(optimal_values)))
-        print("The resulting total value bought (via all paths) is: {:.18f}".format(optimal_b_sum))
-        print("The resulting gamma is: {:.18f}".format(optimal_b_sum - sum(optimal_values)/exch_rate))
+        print("The resulting total value sold   (via all paths) is: {:.18f}".format(total_sell))
+        print("The resulting total value bought (via all paths) is: {:.18f}".format(total_buy))
+        print("The resulting gamma is: {:.18f}".format(total_buy - total_sell/exch_rate))
 
         print(" ")
 
         # Print path specific information
-        for i, val in enumerate(optimal_values):
+        for i, val in enumerate(optimal_coins_sell):
             path = self.paths[i]
             vertices = [path[0]['sell_token']]
             for edge in path:
                 vertices.append(edge['buy_token'])
             path_str = " -> ".join(vertices)
             string_sell = f"The resulting total value sold via   {path_str} is: {val:.18f}"
-            string_buy  = f"The resulting total value bought via {path_str} is: {optimal_b_values[i]:.18f}"
+            string_buy  = f"The resulting total value bought via {path_str} is: {optimal_coins_buy[i]:.18f}"
             print(string_sell)
             print(string_buy)
             print(" ")
 
-        return optimal_values, optimal_b_values, optimal_b_sum 
+        # Update order information
+        self.order.ex_sell_amount = total_sell
+        self.order.ex_buy_amount = total_buy
+
+        # Update venues information
+        self.update_venues(optimal_coins_sell)
+
+        return optimal_coins_sell, optimal_coins_buy, total_buy 
+        
+    def update_venues(self, optimal_coins_sell):
+        """
+        Updates the venues' reserves based on the optimal coins to sell along each path.
+
+        This method iterates through each path and updates the reserves of the venues involved 
+        in the transactions. It calculates the new reserves after selling a specified amount of 
+        coins and propagates the outcome of each transaction through the path.
+
+        Parameters:
+        -----------
+        optimal_coins_sell : list
+            A list of amounts of initial coins to sell along each path. The length of this list 
+            should be equal to the number of paths of the strategy.
+
+        Updates:
+        --------
+        - The `reserves` attribute of each `venue` object in `self.venues` is updated with 
+          the new reserves after the transactions.
+        - Adds 'ex_sell_amount' and 'ex_buy_amount' keys to the `reserves` dictionary of the 
+          respective venues to reflect the external sell and buy amounts for each transaction.
+        """
+        for i,path in enumerate(self.paths):
+            current_value = optimal_coins_sell[i]
+            for edge_data in path:
+
+                # Get and update the correct venue information
+                venue_name = edge_data['venue']
+                for v,venue in enumerate(self.venues):
+                    if venue.name == venue_name:
+                        break
+
+                venue.reserves[edge_data['sell_token']] += current_value
+                venue.reserves['ex_buy_amount'] = current_value
+
+                # Propagate and get outcome of transaction
+                current_value = edge_data['price_function'](current_value, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token'])
+
+                venue.reserves[edge_data['buy_token']] -= current_value
+                venue.reserves['ex_sell_amount'] = current_value
+                venue.reserves['sell_token'] = edge_data['buy_token']
+                venue.reserves['buy_token'] = edge_data['sell_token']
+
+    def print_results(self, file=None):
+        """
+        Prints the result of the surplus maximization
+
+        This method collects the data from the venues and orders, formats it into a JSON-like
+        structure, and then either prints it to the console or writes it to a specified file.
+
+        Parameters:
+        -----------
+        file : str, optional
+            The file path where the output should be written. If None, the output is printed to the console.
+
+        """
+        venues_data = {}
+        for venue in self.venues:
+            venues_data[venue.name] = {
+                "sell_token": venue.reserves['sell_token'],
+                "buy_token": venue.reserves['buy_token'],
+                "ex_buy_amount":  f"{venue.reserves['ex_buy_amount']:.18f}".replace(".","_"),
+                "ex_sell_amount": f"{venue.reserves['ex_sell_amount']:.18f}".replace(".","_"),
+            }
+
+        order_data = {
+            self.order.order_number: {
+                "partial_fill": self.order.partial_fill,
+                "buy_amount": f"{self.order.limit_buy_amount:.18f}".replace(".","_"),
+                "sell_amount": f"{self.order.limit_sell_amount:.18f}".replace(".", "_"),
+                "buy_token": self.order.buy_token,
+                "sell_token": self.order.sell_token,
+                "ex_buy_amount":  f"{self.order.ex_buy_amount:.18f}".replace(".","_"),
+                "ex_sell_amount": f"{self.order.ex_sell_amount:.18f}".replace(".","_")
+            }
+        }
+
+        output_data = {
+            "venues": venues_data,
+            "orders": order_data
+        }
+
+        output = json.dumps(output_data, indent=4)
+      
+        if file:
+            with open(file, 'w') as f:
+                f.write(output)
+        else:
+            print(output)
+               
+
+              
+
+

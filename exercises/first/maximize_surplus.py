@@ -20,3 +20,5 @@ if __name__ == "__main__":
         sys.exit(1)
     
     interface.main(args.file_path)
+
+

@@ -30,7 +30,7 @@ def load_data(file_path):
         print(f"Error decoding JSON from file {file_path}.")
         sys.exit(1)
 
-def create_orders(data):
+def create_order(data):
     """
     Create a list of Order instances from the loaded JSON data.
 
@@ -38,14 +38,12 @@ def create_orders(data):
     data (dict): The loaded JSON data.
 
     Returns:
-    list: A list of Order instances.
+    order: a order instance
     """
-    Orders = []
     for index in data['orders']:
         Order = order.from_json(index, data['orders'][index])
-        Orders.append(Order)
-        #Order.print_info()
-    return Orders
+        break
+    return Order
 
 def create_venues(data):
     """
@@ -60,7 +58,6 @@ def create_venues(data):
     Venues = []
     for venue_name, venue_info in data['venues'].items():
         Venue = venue.from_json(venue_name, venue_info['reserves'])
-        #Venue.print_info()
         Venues.append(Venue)
     return Venues
 
@@ -75,7 +72,7 @@ def main(file_path):
     data = load_data(file_path)
 
     # Create Orders and Venues from JSON data
-    Orders = create_orders(data)
+    Order = create_order(data)
     Venues = create_venues(data)
 
     # Initialize the market graph from the list of venues
@@ -84,8 +81,10 @@ def main(file_path):
 
     # Initialize Agent and read the first order
     Agent = agent()
-    Agent.read_order(Orders[0])
+    Agent.read_order(Order)
 
     # Read market data and optimize strategy
     Agent.read_market(Market)
     optimal_values, optimal_b_values, optimal_b_sum = Agent.optimize_strategy()
+
+    Agent.print_results(file=file_path.split('.json')[0]+'-results.json')
