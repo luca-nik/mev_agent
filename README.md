@@ -44,5 +44,5 @@ Mettere come si usa interface.
 
 ## Documentation
 
-For detailed class documentation, please refer to [CLASSES.md](docs/CLASSES.md).
+For detailed class documentation, please refer to [DOCUMENTATION.md](docs/DOCUMENTATION.md).
 
