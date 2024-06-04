@@ -55,6 +55,12 @@ With resulting JSON-file
     }
 }
 ```
+
+<div align="center">
+  <img src="docs/images/graph_1_ex1.png" alt="Diagram">
+  <p style="margin-top: 10px;">Strategy graph of the first input.</p>
+</div>
+
 ### Second Input
 ```console
 luca@NTNU19403:~/programmi/mev_agent/exercises/first$ python3 maximize_surplus.py input2.json 
@@ -106,6 +112,10 @@ With resulting JSON-file
     }
 }
 ```
+<div align="center">
+  <img src="docs/images/graph_2_ex1.png" alt="Diagram">
+  <p style="margin-top: 10px;">Strategy graph of the secon input.</p>
+</div>
 
 ### Third input
 ```console
@@ -189,6 +199,10 @@ With resulting JSON-file:
     }
 }
 ```
+<div align="center">
+  <img src="docs/images/graph_3_ex1.png" alt="Diagram">
+  <p style="margin-top: 10px;">Strategy graph of the third input.</p>
+</div>
 
 ## Discussion
 Numerical error is hindering the precision of the results, providing a coin conservation error in the order of 10**-12.
@@ -196,3 +210,4 @@ Numerical error is hindering the precision of the results, providing a coin cons
 This for example results (in exercise 3) in exchanging a very small amount of coins through channel MU_RHO, resulting in zero coins bought.
 
 This is for sure an error of my procedure. Maybe I should enforce global coin conservation, although I might be concerned with the convexity of such constraint.
+
