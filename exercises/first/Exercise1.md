@@ -57,7 +57,7 @@ With resulting JSON-file
 ```
 
 <div align="center">
-  <img src="https://github.com/nicoli-luca/mev_agent/blob/main/docs/images/graph_1_ex1.png" alt="Diagram" width="50%" height="50%">
+  <img src="https://github.com/nicoli-luca/mev_agent/blob/main/docs/images/graph_1_ex1.png" alt="Diagram" width="60%" height="60%">
   <p style="margin-top: 10px;">Strategy graph of the first input.</p>
 </div>
 
@@ -113,7 +113,7 @@ With resulting JSON-file
 }
 ```
 <div align="center">
-  <img src="images/graph_2_ex1.png" alt="Diagram">
+  <img src="https://github.com/nicoli-luca/mev_agent/blob/main/docs/images/graph_2_ex1.png" alt="Diagram" width="60%" height="60%">
   <p style="margin-top: 10px;">Strategy graph of the secon input.</p>
 </div>
 
@@ -200,7 +200,7 @@ With resulting JSON-file:
 }
 ```
 <div align="center">
-  <img src="docs/images/graph_3_ex1.png" alt="Diagram">
+  <img src="https://github.com/nicoli-luca/mev_agent/blob/main/docs/images/graph_3_ex1.png" alt="Diagram" width="60%" height="60%">
   <p style="margin-top: 10px;">Strategy graph of the third input.</p>
 </div>
 
