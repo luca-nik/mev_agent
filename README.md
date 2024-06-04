@@ -34,7 +34,7 @@ Knowing the user intent, and the possible paths in the market connecting the des
 
 With `N` being the number of simple paths connecting `token1` with `token2` in the strategy graph. 
 
-In case the keyword `partial_fill = false` in the user order, the condition for the total amount of sold will be an equality (*Fly-or-kill* situation).
+In case the keyword `partial_fill = false` in the user order, the condition for the total amount of coins sold will be a strict equality (*Fly-or-kill* situation).
 
 <div align="center">
   <img src="docs/images/example_strategy-paths.png" alt="Diagram">
