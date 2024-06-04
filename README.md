@@ -77,6 +77,11 @@ json_path = 'path-to-json/file.json'
 mev_interface.main(json_path)
 
 ```
+## Exercises
+
+In the following I report the links to the excercises:
+
+-Excercise 1
 
 
 ## Documentation
