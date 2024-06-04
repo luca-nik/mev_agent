@@ -32,6 +32,7 @@ Knowing the user intent, and the possible paths in the market connecting the des
 
 ![Equation](docs/images/surplus_maximization_equation.png)
 
+In particular `s` is a N-dimensional variable, with `N` being the number of simple paths connecting `token1` with `token2` in the strategy graph.
 
 ## Installation
 
