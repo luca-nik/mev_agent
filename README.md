@@ -11,7 +11,7 @@ This project involves developing a Maximal Extractable Value (MEV) agent designe
 
 ## Overview
 
-This project is designed to simulate a market with multiple trading venues, each with its own liquidity pools. The main components are:
+This project is designed to simulate a market with multiple trading venues, each with its own liquidity pool. The main components are:
 - `Order`: Represents an order with user intent for trading.
 - `Venue`: Represents a trading venue with token reserves.
 - `Market`: Represents a market of trading venues, it is a graph with tokens at the vertices and venues at the edges.
