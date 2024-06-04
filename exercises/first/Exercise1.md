@@ -1,6 +1,6 @@
 # Discussion Excercise 1
 
-To evaluate the solutions I provide it is sufficient to run the code 
+To replicate the solutions I provide it is sufficient to run the code 
 ```console
 example@example:~$PATH-TO-MEV_AGENT/mev_agent/exercises/first$ python3 maximize_surplus.py input.json
 ```
