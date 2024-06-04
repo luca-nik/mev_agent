@@ -52,7 +52,9 @@ With `N` being the number of simple paths connecting `token1` with `token2` in t
     ```
 
 ## Usage
-To use the code we need 
+To use the code we need first to add to the system path `path-to-src`, i.e. the path to the `src` folder containing the python codes.
+Then we only need to import [`mev_project_interface`](docs/mev_project_interface.md) and run its procedure `main` specifying the JSON-file containing user orders and market venues.
+
 
 ```python
 import sys
@@ -62,21 +64,14 @@ import json
 from matplotlib import pyplot as plt
 
 # Add the src directory to the system path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'path-to-src')))
+import mev_project_interface as mev_interface
 
-from classes import order, venue, market, agent
-import mev_project_interface as interface
+# The JSON-file containing user orders and market venues
+json_path = 'path-to-json/file.json'
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Process a JSON file path.')
-    parser.add_argument('file_path', type=str, nargs='?', default=None, help='Path to the JSON file')
-    args = parser.parse_args()
-
-    if args.file_path is None:
-        print("Error: No file path provided. Please provide the path to the JSON file.")
-        sys.exit(1)
-
-    interface.main(args.file_path)
+# Run MEV agent optimization on the JSON containing user orders and venues.
+mev_interface.main(json_path)
 
 ```
 
