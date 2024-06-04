@@ -57,7 +57,7 @@ With resulting JSON-file
 ```
 
 <div align="center">
-  <img src="https://github.com/nicoli-luca/mev_agent/blob/main/docs/images/graph_1_ex1.png" alt="Diagram">
+  <img src="https://github.com/nicoli-luca/mev_agent/blob/main/docs/images/graph_1_ex1.png" alt="Diagram" width="50%" height="50%">
   <p style="margin-top: 10px;">Strategy graph of the first input.</p>
 </div>
 
