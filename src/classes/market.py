@@ -134,13 +134,14 @@ class market:
         ValueError
             If an unsupported market type is provided.
         """
+        prec = 1
         if market_type == 'constant_product':
             if what_ == 'buy': 
-                buy_amount = liquidity_buy_token * (1 - liquidity_sell_token / (liquidity_sell_token + coin_amount))
-                return buy_amount
+                buy_amount = prec*liquidity_buy_token * (coin_amount/ (liquidity_sell_token + coin_amount))
+                return buy_amount/prec
             if what_ == 'sell':
-                sell_amount = -liquidity_sell_token * (1 - liquidity_buy_token / (liquidity_buy_token - coin_amount))
-                return sell_amount
+                sell_amount = -prec*liquidity_sell_token * (-coin_amount / (liquidity_buy_token - coin_amount))
+                return sell_amount/prec
         else:
             raise ValueError(f"Unsupported market type: {market_type}")
 
