@@ -23,6 +23,7 @@ The idea is that given a user `Order` containing the intent of buying `token2` s
 The graph direction is from `token1` to `token2`.
 
 ![Diagram](docs/images/example_strategy.png)
+<!-- Example of a strategy graph -->
 Knowing the user intent, and the possible paths in the market connecting the desired user tokens, `Agent` can now search for the optimal coin exchange among the directed paths to maximize the user surplus. 
 
 ![Equation](docs/images/surplus_maximization_equation.png)
