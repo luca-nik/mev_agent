@@ -77,6 +77,77 @@ json_path = 'path-to-json/file.json'
 mev_interface.main(json_path)
 
 ```
+
+That when applied to the following input `test1.json`:
+```json
+{
+    "orders": {
+        "0": {
+            "sell_token": "COIN1",
+            "buy_token": "COIN2",
+            "limit_sell_amount": "1000_000000000000000000",
+            "limit_buy_amount": "900_000000000000000000",
+            "partial_fill": false}
+    },
+    "venues": {
+        "AMM_RHO_KAPPA": {
+            "reserves": {
+                "COIN1": "10000_000000000000000000",
+                "COIN2": "200000_000000000000000000"
+            }
+        }
+    }
+}
+```
+
+Outputs on the terminal:
+
+```console
+example@example:~$ python3 mev_optimization.py
+ 
+MEV Agent ready to maximize the surplus .. or at least trying :)
+ 
+Status: 0
+Message: Optimization terminated successfully
+Number of Iterations: 2
+Number of Function Evaluations: 4
+Number of Gradient Evaluations: 2
+ 
+ 
+The resulting total value sold   (via all paths) is: 1000.000000000000000000
+The resulting total value bought (via all paths) is: 18181.818181818187440513
+The resulting gamma is: 17281.818181818187440513
+Total coin conservation error: 1.3642421e-12
+ 
+The resulting total value sold via   COIN1 -> COIN2 is: 1000.000000000000000000
+The resulting total value bought via COIN1 -> COIN2 is: 18181.818181818187440513
+```
+
+Moreover an extra JSON-file called `test1-results.json` is created
+
+```json
+{
+    "venues": {
+        "AMM_RHO_KAPPA": {
+            "sell_token": "COIN2",
+            "buy_token": "COIN1",
+            "ex_buy_amount": "1000_000000000000000000",
+            "ex_sell_amount": "18181_818181818187440513"
+        }
+    },
+    "orders": {
+        "0": {
+            "partial_fill": false,
+            "buy_amount": "900_000000000000000000",
+            "sell_amount": "1000_000000000000000000",
+            "buy_token": "COIN2",
+            "sell_token": "COIN1",
+            "ex_buy_amount": "18181_818181818187440513",
+            "ex_sell_amount": "1000_000000000000000000"
+        }
+    }
+}
+```
 ## Exercises
 
 In the following I report the links to the excercises:
