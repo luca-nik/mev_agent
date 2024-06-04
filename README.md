@@ -158,5 +158,5 @@ In the following I report the links to the excercises:
 
 ## Documentation
 
-For detailed class documentation, please refer to [documentation](docs/DOCUMENTATION.md).
+For detailed documentation, please refer to [documentation](docs/DOCUMENTATION.md).
 
