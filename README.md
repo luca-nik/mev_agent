@@ -42,7 +42,7 @@ In case the keyword `partial_fill = false` in the user order, the condition for 
 </div>
 
 ### NOTE
-Since the [forward-wouting problem is convex](https://hal.science/hal-03455981/file/goroen.pdf), we don't need a global optimizer and the optimization is performed employing [scipy.optimize.minimize](scipy.optimize.minimize) employing the [Sequential Least Squares Programming (SLSQP)](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-slsqp.html) solver.
+Since the [forward-routing problem is convex](https://hal.science/hal-03455981/file/goroen.pdf), we don't need a global optimizer and the optimization is performed employing [scipy.optimize.minimize](scipy.optimize.minimize) employing the [Sequential Least Squares Programming (SLSQP)](https://docs.scipy.org/doc/scipy/reference/optimize.minimize-slsqp.html) solver.
 
 ## Installation
 
