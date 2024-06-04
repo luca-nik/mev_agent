@@ -6,6 +6,7 @@ This project involves developing a Maximal Extractable Value (MEV) agent designe
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Exercises](#exercises)
 - [Documentation](#documentation)
 
 ## Overview
