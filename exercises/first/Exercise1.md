@@ -192,6 +192,7 @@ With resulting JSON-file:
 
 ## Discussion
 Numerical error is hindering the precision of the results, providing a coin conservation error in the order of 10**-12.
-This for example results in exchanging a very small amount of coins through channel MU_RHO, resulting in zero coins bought.
+
+This for example results (in exercise 3) in exchanging a very small amount of coins through channel MU_RHO, resulting in zero coins bought.
 
 This is for sure an error of my procedure. Maybe I should enforce global coin conservation, although I might be concerned with the convexity of such constraint.
