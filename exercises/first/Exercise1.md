@@ -57,7 +57,7 @@ With resulting JSON-file
 ```
 
 <div align="center">
-  <img src="docs/images/graph_1_ex1.png" alt="Diagram">
+  <img src="images/graph_1_ex1.png" alt="Diagram">
   <p style="margin-top: 10px;">Strategy graph of the first input.</p>
 </div>
 
@@ -113,7 +113,7 @@ With resulting JSON-file
 }
 ```
 <div align="center">
-  <img src="docs/images/graph_2_ex1.png" alt="Diagram">
+  <img src="images/graph_2_ex1.png" alt="Diagram">
   <p style="margin-top: 10px;">Strategy graph of the secon input.</p>
 </div>
 
