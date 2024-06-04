@@ -6,8 +6,7 @@ This project involves developing a Maximal Extractable Value (MEV) agent designe
 - [Overview](#overview)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Documentation](#documentation)
 
 ## Overview
 
@@ -51,6 +50,7 @@ In particular `s` is a N-dimensional variable, with `N` being the number of simp
 
 Mettere come si usa ma sopratutto link a come si risolvono gli esercizi.
 Mettere come si usa interface.
+
 
 ## Documentation
 
