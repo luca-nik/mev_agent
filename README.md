@@ -75,7 +75,7 @@ import mev_project_interface as mev_interface
 json_path = 'path-to-json/file.json'
 
 # Run MEV agent optimization on the JSON containing user orders and venues.
-mev_interface.main(json_path)
+mev_interface.main(json_path, plot_strategy=False) #If plot_strategy, makes the image of the directed graph
 
 ```
 
