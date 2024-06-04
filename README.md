@@ -55,7 +55,7 @@ With `N` being the number of simple paths connecting `token1` with `token2` in t
 To use the code we need first to add to the system path `path-to-src`, i.e. the path to the `src` folder containing the python codes.
 Then we only need to import [`mev_project_interface`](docs/mev_project_interface.md) and run its procedure `main` specifying the JSON-file containing user orders and market venues.
 
-# Example Usage
+### Example Usage
 
 ```python
 import sys
