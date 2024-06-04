@@ -7,7 +7,6 @@ from matplotlib import pyplot as plt
 # Add the src directory to the system path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 
-from classes import order, venue, market, agent
 import mev_project_interface as interface
 
 if __name__ == "__main__":

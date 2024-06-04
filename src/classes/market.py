@@ -66,8 +66,11 @@ class market:
         Plots the graph using matplotlib. If a file path is provided, the plot is saved to the file.
     
         Parameters:
-        - file (str, optional): The path to save the plot image. If None, the plot is displayed.
-        - verbose (bool, optional): If True, prints details about the graph nodes and edges. Default is False.
+        -----------
+        file :str, optional
+          The path to save the plot image. If None, the plot is displayed.
+        verbose : bool, optional
+          If True, prints details about the graph nodes and edges. Default is False.
         """
         pos = nx.spring_layout(self.graph)  # positions for all nodes
         plt.figure(figsize=(10, 8))

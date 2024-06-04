@@ -9,7 +9,7 @@
         "AMM_MU_RHO": {
             "sell_token": "RHO",
             "buy_token": "MU",
-            "ex_buy_amount": "0_000000000000000026",
+            "ex_buy_amount": "0_000000000000000025",
             "ex_sell_amount": "0_000000000000000000"
         },
         "AMM_MU_CHI": {

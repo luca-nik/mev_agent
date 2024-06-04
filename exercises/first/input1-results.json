@@ -1,8 +1,8 @@
 {
     "venues": {
         "AMM_RHO_KAPPA": {
-            "sell_token": "RHO",
-            "buy_token": "KAPPA",
+            "sell_token": "KAPPA",
+            "buy_token": "RHO",
             "ex_buy_amount": "1000_000000000000000000",
             "ex_sell_amount": "909_090909090909349288"
         }

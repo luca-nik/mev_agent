@@ -14,7 +14,9 @@ def load_data(file_path):
     Load data from a JSON file.
 
     Parameters:
-    file_path (str): The path to the JSON file.
+    -----------
+    file_path : str 
+        The path to the JSON file.
 
     Returns:
     dict: The loaded data from the JSON file.
@@ -35,7 +37,9 @@ def create_order(data):
     Create a list of Order instances from the loaded JSON data.
 
     Parameters:
-    data (dict): The loaded JSON data.
+    -----------
+    data: dict 
+        The loaded JSON data.
 
     Returns:
     order: a order instance
@@ -50,7 +54,9 @@ def create_venues(data):
     Create a list of Venue instances from the loaded JSON data.
 
     Parameters:
-    data (dict): The loaded JSON data.
+    -----------
+    data: dict
+        The loaded JSON data.
 
     Returns:
     list: A list of Venue instances.
@@ -61,12 +67,16 @@ def create_venues(data):
         Venues.append(Venue)
     return Venues
 
-def main(file_path):
+def main(file_path, plot_strategy=False):
     """
     Main function to process the JSON file and create the market graph.
 
     Parameters:
-    file_path (str): The path to the JSON file.
+    -----------
+    file_path : str
+        The path to the JSON file.
+    plot_strategy : bool, optional
+        Plots the strategy graph
     """
     # Load data from JSON file
     data = load_data(file_path)
@@ -77,15 +87,18 @@ def main(file_path):
 
     # Initialize the market graph from the list of venues
     Market = market(Venues)
-    #Market.plot_market()
 
     # Initialize Agent and read the first order
     Agent = agent()
     Agent.read_order(Order)
 
-    # Read market data and optimize strategy
+    # Read market data and create strategy graph
     Agent.read_market(Market)
-    Agent.plot_strategy()
+    if plot_strategy:
+        Agent.plot_strategy()
+
+    # Optimize the strategy
     optimal_values, optimal_b_values, optimal_b_sum = Agent.optimize_strategy()
 
+    # Output results in JSON file
     Agent.print_results(file=file_path.split('.json')[0]+'-results.json')

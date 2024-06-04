@@ -266,7 +266,7 @@ class agent:
         }
 
         print(" ")
-        print("MEV Agent reporting for duty, ready to maximize the surplus .. or at least trying :)")
+        print("MEV Agent ready to maximize the surplus .. or at least trying :)")
         # Initial guesses for sell amount through each path
         initial_guess = [0.0] * len(self.paths)
 
@@ -302,7 +302,7 @@ class agent:
         print("The resulting total value sold   (via all paths) is: {:.18f}".format(total_sell))
         print("The resulting total value bought (via all paths) is: {:.18f}".format(total_buy))
         print("The resulting gamma is: {:.18f}".format(total_buy - total_sell/exch_rate))
-        print("Total coin conservation error: {:.18f}".format(error))
+        print("Total coin conservation error: {:.7e}".format(error))
         print(" ")
 
         # Print path specific information
