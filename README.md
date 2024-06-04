@@ -37,6 +37,7 @@ With `N` being the number of simple paths connecting `token1` with `token2` in t
   <img src="docs/images/example_strategy-paths.png" alt="Diagram">
   <p style="margin-top: 10px;">Example of a strategy graph where the coins sold and bought along the different channels are highlighted.</p>
 </div>
+
 ## Installation
 
 1. Clone the repository:
