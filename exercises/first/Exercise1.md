@@ -6,13 +6,13 @@ example@example:~$PATH-TO-MEV_AGENT/mev_agent/exercises/first$ python3 maximize_
 ```
 Where `input.json` is one of the three inputs provided.
 
-In the following I report the solutions I obtained emplyoing my protocol and my program
+In the following I report the solutions I obtained emplyoing my protocol and my program.
 
 ### First input
 ```console
 luca@NTNU19403:~/programmi/mev_agent/exercises/first$ python3 maximize_surplus.py input1.json 
  
-MEV Agent reporting for duty, ready to maximize the surplus .. or at least trying :)
+MEV Agent ready to maximize the surplus .. or at least trying :)
  
 Status: 0
 Message: Optimization terminated successfully
@@ -65,7 +65,7 @@ With resulting JSON-file
 ```console
 luca@NTNU19403:~/programmi/mev_agent/exercises/first$ python3 maximize_surplus.py input2.json 
  
-MEV Agent reporting for duty, ready to maximize the surplus .. or at least trying :)
+MEV Agent ready to maximize the surplus .. or at least trying :)
  
 Status: 0
 Message: Optimization terminated successfully
@@ -210,4 +210,7 @@ Numerical error is hindering the precision of the results, providing a coin cons
 This for example results (in exercise 3) in exchanging a very small amount of coins through channel MU_RHO, resulting in zero coins bought.
 
 This is for sure an error of my procedure. Maybe I should enforce global coin conservation, although I might be concerned with the convexity of such constraint.
+
+Regarding the advantages of this procedure is that it is extremely fast since we are not searching for a gloabl minimum on a rough surface, but rather we just need to find the minimum of such convex problem. (We are minimizing -surplus).
+Something that has to be noticed is that in all cases we are actually enforcing to sell the complete amount of coins (this is due to the keyword `partial_fill`). In this case, we might not hit the absolute maximum of the surplus.
 
