@@ -6,7 +6,7 @@ example@example:~$PATH-TO-MEV_AGENT/mev_agent/exercises/first$ python3 maximize_
 ```
 Where `input.json` is one of the three inputs provided.
 
-In this case, the keyword `partial_fill = false` in all the user orders, we are in a *Fly-or-kill* situation.
+In this case the keyword `partial_fill = false` in all the user orders, thus we are in a *Fly-or-kill* situation.
 
 
 In the following I report the solutions I obtained emplyoing my protocol and my program.
