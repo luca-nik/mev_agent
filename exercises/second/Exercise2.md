@@ -50,6 +50,10 @@ The resulting total value sold via   ETH -> USDC is: 100.000000000000000000
 The resulting total value bought via ETH -> USDC is: 375966.78079798759426921
 ```
 
+```
+The surplus
+```
+
 Connettere un paio e fare l'exchange esemplificativo.
 Qui dovro parlare delle gas-fees e del processo in realta' di mining del mio coso, per cui in realta' noi avremo casini causati da ordini di altri utenti che quindi potranno ridurre il nostro surplus
 
