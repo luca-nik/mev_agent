@@ -1,7 +1,10 @@
 # My solutions to Exercise 2
 
 In this exercise I choose `ETH` and `USDC` as token pairs to swap.
-In particular I considered a liquidity pool on UNiswap https://v2.info.uniswap.org/pair/0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc.
+
+For the reserves I considered a [liquidity pool on Uniswap](https://v2.info.uniswap.org/pair/0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc).
+
+In the following the JSON file of the input provided to the `maximize_mev.py` code.
 
 ```json
 {
@@ -10,7 +13,7 @@ In particular I considered a liquidity pool on UNiswap https://v2.info.uniswap.o
             "sell_token": "ETH",
             "buy_token": "USDC",
             "limit_sell_amount": "100_000000000000000000",
-            "limit_buy_amount": "6000_000000000000000000",
+            "limit_buy_amount": "35000_000000000000000000",
             "partial_fill": false}
     },
     "venues": {
@@ -22,6 +25,29 @@ In particular I considered a liquidity pool on UNiswap https://v2.info.uniswap.o
         }
     }
 }
+```
+
+With results 
+
+```console
+luca@lime:~/programmi/mev_agent/exercises/second$ python3 maximize_surplus.py input.json 
+ 
+MEV Agent ready to maximize the surplus .. or at least trying :)
+ 
+Status: 0
+Message: Optimization terminated successfully
+Number of Iterations: 2
+Number of Function Evaluations: 4
+Number of Gradient Evaluations: 2
+ 
+ 
+The resulting total value sold   (via all paths) is: 100.000000000000000000
+The resulting total value bought (via all paths) is: 375966.780797987594269216
+The resulting gamma is: 25966.780797987594269216
+Total coin conservation error: 1.4210855e-14
+ 
+The resulting total value sold via   ETH -> USDC is: 100.000000000000000000
+The resulting total value bought via ETH -> USDC is: 375966.78079798759426921
 ```
 
 Connettere un paio e fare l'exchange esemplificativo.
