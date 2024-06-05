@@ -101,7 +101,7 @@ Other market participants can also influence the outcome. Frontrunning, sandwich
 ### Gas Fees
 Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability.
 
-
+# Altro
 Connettere un paio e fare l'exchange esemplificativo.
 Qui dovro parlare delle gas-fees e del processo in realta' di mining del mio coso, per cui in realta' noi avremo casini causati da ordini di altri utenti che quindi potranno ridurre il nostro surplus
 
