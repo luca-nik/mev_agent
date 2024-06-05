@@ -229,4 +229,4 @@ Something that has to be noticed is that in all cases we are actually enforcing 
 
 ## Conclusions
 
-# Go to [Second Exercise](../second/Exercise2.md)
+Go to [Second Exercise](../second/Exercise2.md)
