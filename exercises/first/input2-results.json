@@ -4,13 +4,13 @@
             "sell_token": "PI",
             "buy_token": "TAU",
             "ex_buy_amount": "1000_000000000000000000",
-            "ex_sell_amount": "1818_181818181818698577"
+            "ex_sell_amount": "1818_181818181818243829"
         },
         "AMM_PI_PSI": {
             "sell_token": "PSI",
             "buy_token": "PI",
-            "ex_buy_amount": "1818_181818181818698577",
-            "ex_sell_amount": "1081_081081081082174933"
+            "ex_buy_amount": "1818_181818181818243829",
+            "ex_sell_amount": "1081_081081081081038064"
         }
     },
     "orders": {
@@ -20,7 +20,7 @@
             "sell_amount": "1000_000000000000000000",
             "buy_token": "PSI",
             "sell_token": "TAU",
-            "ex_buy_amount": "1081_081081081082174933",
+            "ex_buy_amount": "1081_081081081081038064",
             "ex_sell_amount": "1000_000000000000000000"
         }
     }
