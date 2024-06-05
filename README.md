@@ -157,6 +157,7 @@ In the following I report the links to the excercises:
 
 - [Exercise 1](exercises/first/Exercise1.md)
 - [Exercise 2](exercises/second/Exercise2.md)
+- [Exercise 3](exercises/third/Exercise3.md)
 
 
 ## Documentation
