@@ -49,10 +49,48 @@ Total coin conservation error: 1.4210855e-14
 The resulting total value sold via   ETH -> USDC is: 100.000000000000000000
 The resulting total value bought via ETH -> USDC is: 375966.78079798759426921
 ```
+```json
+    "venues": {
+        "UNISWAP_USDC_ETH": {
+            "sell_token": "USDC",
+            "buy_token": "ETH",
+            "ex_buy_amount": "100_000000000000000000",
+            "ex_sell_amount": "375966_780797987594269216"
+        }
+    },
+    "orders": {
+        "0": {
+            "partial_fill": false,
+            "buy_amount": "350000_000000000000000000",
+            "sell_amount": "100_000000000000000000",
+            "buy_token": "USDC",
+            "sell_token": "ETH",
+            "ex_buy_amount": "375966_780797987594269216",
+            "ex_sell_amount": "100_000000000000000000"
+        }
+    }
+}
+```
 
 ```
 The surplus generated is 25966_780797987594269216
 ```
+
+## Discussion
+When comparing this result with real swaps we have to consider several factors that might influence our outcome.
+In the follwoing I will try to adress some of these factors. 
+
+### Liqidity Pool providers fee
+First of all we have to consider that in my example, the price of token `B` (b) in a AMM will be `b(x) = [B]x/(x + [A])` where `[A]` and `[B]` are the initial liquidities of the pool of the two tokens and `x` is the amount of token `A` sold. In real case scenarios, as in Uniswap, real price functions account for the fee extracted by the liquidity providers for every transaction ` 0 <= 1 − γ < 1`, and the price function becomes
+`b(x) = [B]γx/(γx + [A])`.
+
+### Price function
+
+
+### Routing
+
+
+### Price slippage
 
 Connettere un paio e fare l'exchange esemplificativo.
 Qui dovro parlare delle gas-fees e del processo in realta' di mining del mio coso, per cui in realta' noi avremo casini causati da ordini di altri utenti che quindi potranno ridurre il nostro surplus
