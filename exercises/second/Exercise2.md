@@ -50,7 +50,8 @@ The resulting total value sold via   ETH -> USDC is: 100.000000000000000000
 The resulting total value bought via ETH -> USDC is: 375966.78079798759426921
 ```
 ```json
-    "venues": {
+{
+   "venues": {
         "UNISWAP_USDC_ETH": {
             "sell_token": "USDC",
             "buy_token": "ETH",
