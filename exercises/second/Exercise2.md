@@ -5,3 +5,11 @@ Qui dovro parlare delle gas-fees e del processo in realta' di mining del mio cos
 
 Inoltre dovro' vedere anche cosa vuol dire lo slippage.
 Vedere in uniswap v3 come calcolano lo scambio, magari in alcune liquididty pools la funzione di prezzo non e' proprio giusta giusta.
+
+
+Dire che in genere quando facciamo degli swaps su aggregatori tipo.., non e' garantito che sia a singolo hop, quindi non necessariamente avro gli stessi risultati.
+
+-gas prices
+-multiple hops
+-price slippage
+-non perfect constant-product price functions

@@ -69,7 +69,7 @@ class agent:
         else:
             print("No order found.")
 
-    def read_market(self, market, verbose = False):
+    def read_market(self, market, verbose = True):
         """
         Evaluates paths in the market connecting sell_token with buy_token of the current order.
         Identifies the venues to visit and the sell and buy tokens for each venue.
@@ -96,7 +96,7 @@ class agent:
                 self.strategy = nx.DiGraph()
                 self.paths = []
                 if verbose:
-                    print(f"Paths from {sell_token} to {buy_token} for order {self.order['order_number']}:")
+                    print(f"Paths from {sell_token} to {buy_token} for order {self.order.order_number}:")
                 for path in paths:
                     if verbose:
                         print(" -> ".join(path))
@@ -108,7 +108,7 @@ class agent:
         except nx.NetworkXNoPath:
             print(f"No paths found from {sell_token} to {buy_token} for order {self.order['order_number']}.")
 
-    def make_strategy(self, path, market, verbose = False):
+    def make_strategy(self, path, market, verbose=False):
         """
         Given a market path, it identifies the venues to visit and the sell and buy tokens for each venue.
         It constructs the strategy graph. It stores the edges of the graphs for future propagation
@@ -133,8 +133,10 @@ class agent:
                 edge_data = market.graph[token1][token2]
                 venues = edge_data['venues']
                 for venue in venues:
-                    liquidity_sell_token = edge_data['liquidity_token1']
-                    liquidity_buy_token = edge_data['liquidity_token2']
+                    sell_token_number = edge_data['tokens'].index(token1) + 1
+                    buy_token_number = edge_data['tokens'].index(token2) + 1
+                    liquidity_sell_token = edge_data['liquidity_token' + str(sell_token_number)]
+                    liquidity_buy_token = edge_data['liquidity_token' + str(buy_token_number)]
                     if verbose:
                         print(f"Venue: {venue}, Sell Token: {token1}, Buy Token: {token2}, Liquidity: {liquidity_sell_token} {token1}, {liquidity_buy_token} {token2}")
 
@@ -254,15 +256,15 @@ class agent:
         if self.order.partial_fill:
             constraints = [{'type': 'ineq', 'fun': constraint_sell}]  # total_sold <= s_lim
         else: #Fly-or-kill
-            constraints = [{'type': 'eq', 'fun': constraint_sell}]    # total_sold  = s_lim
+            constraints = [{'type': 'eq', 'fun': constraint_sell}]   # total_sold  = s_lim
         
 
         nlc2 = NonlinearConstraint(constraint_buy, 0, np.inf)
         constraints.append(nlc2)
 
         options = {
-            'ftol': 1e-18,  # Convergence tolerance for the objective function
-            'maxiter': 100000  # Maximum number of iterations
+            'ftol': 1e-6,  # Convergence tolerance for the objective function
+            'maxiter': 1000  # Maximum number of iterations
         }
 
         print(" ")

@@ -67,7 +67,7 @@ def create_venues(data):
         Venues.append(Venue)
     return Venues
 
-def main(file_path, plot_strategy=False):
+def main(file_path, plot_strategy=False, verbose=False):
     """
     Main function to process the JSON file and create the market graph.
 
@@ -77,6 +77,8 @@ def main(file_path, plot_strategy=False):
         The path to the JSON file.
     plot_strategy : bool, optional
         Plots the strategy graph
+    verbose : bool, optional
+        Prints additional verbose information
     """
     # Load data from JSON file
     data = load_data(file_path)
@@ -93,7 +95,7 @@ def main(file_path, plot_strategy=False):
     Agent.read_order(Order)
 
     # Read market data and create strategy graph
-    Agent.read_market(Market)
+    Agent.read_market(Market, verbose = verbose)
     if plot_strategy:
         Agent.plot_strategy()
 

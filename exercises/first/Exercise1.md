@@ -31,16 +31,15 @@ Total coin conservation error: 2.2737368e-13
  
 The resulting total value sold via   RHO -> KAPPA is: 1000.000000000000000000
 The resulting total value bought via RHO -> KAPPA is: 909.090909090909121915
-
 ```
 
 With resulting JSON-file
 ```json
 {
     "venues": {
-        "AMM_RHO_KAPPA": {
-            "sell_token": "KAPPA",
-            "buy_token": "RHO",
+        "amm_rho_kappa": {
+            "sell_token": "kappa",
+            "buy_token": "rho",
             "ex_buy_amount": "1000_000000000000000000",
             "ex_sell_amount": "909_090909090909121915"
         }
@@ -50,8 +49,8 @@ With resulting JSON-file
             "partial_fill": false,
             "buy_amount": "900_000000000000000000",
             "sell_amount": "1000_000000000000000000",
-            "buy_token": "KAPPA",
-            "sell_token": "RHO",
+            "buy_token": "kappa",
+            "sell_token": "rho",
             "ex_buy_amount": "909_090909090909121915",
             "ex_sell_amount": "1000_000000000000000000"
         }
@@ -127,27 +126,26 @@ luca@lime:~/programmi/mev_agent/exercises/first$ python3 maximize_surplus.py inp
  
 MEV Agent ready to maximize the surplus .. or at least trying :)
  
-Status: 8
-Message: Positive directional derivative for linesearch
-Number of Iterations: 42
-Number of Function Evaluations: 356
-Number of Gradient Evaluations: 38
+Status: 0
+Message: Optimization terminated successfully
+Number of Iterations: 15
+Number of Function Evaluations: 60
+Number of Gradient Evaluations: 15
  
  
-The resulting total value sold   (via all paths) is: 1000.000000000019440449
-The resulting total value bought (via all paths) is: 1301.146505249534584436
-The resulting gamma is: 401.146505249517076663
-Total coin conservation error: 1.1368684e-13
+The resulting total value sold   (via all paths) is: 1000.000000000043769433
+The resulting total value bought (via all paths) is: 1301.146505249568235740
+The resulting gamma is: 401.146505249528900094
+Total coin conservation error: 1.7053026e-13
  
-The resulting total value sold via   MU -> IOTA -> NU is: 289.078085936060801941
-The resulting total value bought via MU -> IOTA -> NU is: 357.725107553711382025
+The resulting total value sold via   MU -> IOTA -> NU is: 289.078084376014658119
+The resulting total value bought via MU -> IOTA -> NU is: 357.725105722187663559
  
-The resulting total value sold via   MU -> RHO -> NU is: 0.000000000000000010
-The resulting total value bought via MU -> RHO -> NU is: 0.000000000000000007
+The resulting total value sold via   MU -> RHO -> NU is: 0.000000000000000000
+The resulting total value bought via MU -> RHO -> NU is: 0.000000000000000000
  
-The resulting total value sold via   MU -> CHI -> NU is: 710.921914063958638508
-The resulting total value bought via MU -> CHI -> NU is: 943.421397695823088725
-
+The resulting total value sold via   MU -> CHI -> NU is: 710.921915624029111314
+The resulting total value bought via MU -> CHI -> NU is: 943.421399527380685868
 ```
 
 With resulting JSON-file:
@@ -157,38 +155,38 @@ With resulting JSON-file:
         "AMM_MU_IOTA": {
             "sell_token": "IOTA",
             "buy_token": "MU",
-            "ex_buy_amount": "289_078085936060801941",
-            "ex_sell_amount": "561_912512514014224507"
+            "ex_buy_amount": "289_078084376014658119",
+            "ex_sell_amount": "561_912509566780840942"
         },
         "AMM_MU_RHO": {
             "sell_token": "RHO",
             "buy_token": "MU",
-            "ex_buy_amount": "0_000000000000000010",
-            "ex_sell_amount": "0_000000000000000005"
+            "ex_buy_amount": "0_000000000000000000",
+            "ex_sell_amount": "0_000000000000000000"
         },
         "AMM_MU_CHI": {
             "sell_token": "CHI",
             "buy_token": "MU",
-            "ex_buy_amount": "710_921914063958638508",
-            "ex_sell_amount": "671_160048534979750912"
+            "ex_buy_amount": "710_921915624029111314",
+            "ex_sell_amount": "671_160049925420935324"
         },
         "AMM_IOTA_NU": {
             "sell_token": "NU",
             "buy_token": "IOTA",
-            "ex_buy_amount": "561_912512514014224507",
-            "ex_sell_amount": "357_725107553711382025"
+            "ex_buy_amount": "561_912509566780840942",
+            "ex_sell_amount": "357_725105722187663559"
         },
         "AMM_RHO_NU": {
             "sell_token": "NU",
             "buy_token": "RHO",
-            "ex_buy_amount": "0_000000000000000005",
-            "ex_sell_amount": "0_000000000000000007"
+            "ex_buy_amount": "0_000000000000000000",
+            "ex_sell_amount": "0_000000000000000000"
         },
         "AMM_CHI_NU": {
             "sell_token": "NU",
             "buy_token": "CHI",
-            "ex_buy_amount": "671_160048534979750912",
-            "ex_sell_amount": "943_421397695823088725"
+            "ex_buy_amount": "671_160049925420935324",
+            "ex_sell_amount": "943_421399527380685868"
         }
     },
     "orders": {
@@ -198,8 +196,8 @@ With resulting JSON-file:
             "sell_amount": "1000_000000000000000000",
             "buy_token": "NU",
             "sell_token": "MU",
-            "ex_buy_amount": "1301_146505249534584436",
-            "ex_sell_amount": "1000_000000000019440449"
+            "ex_buy_amount": "1301_146505249568235740",
+            "ex_sell_amount": "1000_000000000043769433"
         }
     }
 }

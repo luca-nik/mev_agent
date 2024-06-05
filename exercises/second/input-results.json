@@ -1,0 +1,21 @@
+{
+    "venues": {
+        "UNISWAP_USDC_ETH": {
+            "sell_token": "USDC",
+            "buy_token": "ETH",
+            "ex_buy_amount": "100_000000000000000000",
+            "ex_sell_amount": "375966_780797987594269216"
+        }
+    },
+    "orders": {
+        "0": {
+            "partial_fill": false,
+            "buy_amount": "6000_000000000000000000",
+            "sell_amount": "100_000000000000000000",
+            "buy_token": "USDC",
+            "sell_token": "ETH",
+            "ex_buy_amount": "375966_780797987594269216",
+            "ex_sell_amount": "100_000000000000000000"
+        }
+    }
+}

@@ -53,7 +53,8 @@ class market:
                     token1 = tokens[i]
                     token2 = tokens[j]
                     if not self.graph.has_edge(token1, token2):
-                        self.graph.add_edge(token1, token2, venues=[venue.name],       
+                        self.graph.add_edge(token1, token2, venues=[venue.name],
+                                            tokens = [token1, token2],
                                             liquidity_token1 = venue.reserves[token1], 
                                             liquidity_token2 = venue.reserves[token2]) 
                     else:
