@@ -155,7 +155,8 @@ Moreover an extra JSON-file called `test1-results.json` is created
 
 In the following I report the links to the excercises:
 
--[Excercise 1](exercises/first/Exercise1.md)
+-[Exercise 1](exercises/first/Exercise1.md)
+-[Exercise 2](exercises/second/Exercise2.md)
 
 
 ## Documentation
