@@ -216,6 +216,13 @@ The surplus generated is 401_146505249528900094
   <img src="https://github.com/nicoli-luca/mev_agent/blob/main/docs/images/graph_3_ex1.png" alt="Diagram" width="60%" height="60%">
   <p style="margin-top: 10px;">Strategy graph of the third input.</p>
 </div>
+<div style="display: flex; justify-content: center;">
+  <div>
+    <pre>
+<strong>The surplus generated is 9_090909090909121915</strong>
+    </pre>
+  </div>
+</div>
 
 ## Discussion
 In this exercise we are considering a constant product AMM with zero gas-fees. The price function will thus be b(x) = xB/(A+x)
