@@ -51,7 +51,7 @@ The resulting total value bought via ETH -> USDC is: 375966.78079798759426921
 ```
 
 ```
-The surplus
+The surplus generated is 25966_780797987594269216
 ```
 
 Connettere un paio e fare l'exchange esemplificativo.
