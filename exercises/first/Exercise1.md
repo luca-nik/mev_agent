@@ -226,3 +226,7 @@ This is for sure an error of my procedure. Maybe I should enforce global coin co
 
 Regarding the advantages of this procedure is that it is extremely fast since we are not searching for a gloabl minimum on a rough surface, but rather we just need to find the minimum of such convex problem. (We are minimizing -surplus).
 Something that has to be noticed is that in all cases we are actually enforcing to sell the complete amount of coins (this is due to the keyword `partial_fill`). In this case, we might not hit the absolute maximum of the surplus.
+
+## Conclusions
+
+# Go to [Second Exercise](../second/Exercise2.md)
