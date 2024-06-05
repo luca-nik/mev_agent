@@ -2,7 +2,7 @@
 
 In this exercise I choose `ETH` and `USDC` as token pairs to swap.
 
-For the reserves I considered a [liquidity pool on Uniswap](https://v2.info.uniswap.org/pair/0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc).
+For the reserves I considered a [liquidity pool on Uniswap](https://v2.info.uniswap.org/pair/0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc) in date 5 June 2024.
 
 In the following the JSON file of the input provided to the `maximize_mev.py` code.
 
