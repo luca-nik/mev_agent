@@ -211,7 +211,6 @@ With resulting JSON-file:
 In this exercise we are considering a constant product AMM with zero gas-fees. The price function will thus be b(x) = xB/(A+x)
 
 Regarding my results, numerical error is hindering the precision of the results, providing a coin conservation error in the order of 10**-13.
-This is probably responsible for opening a the MU -> RHO -> NU channel in the third exercise.
 
 This is for sure an error of my procedure. Maybe I should enforce global coin conservation, although I might be concerned with the convexity of such constraint.
 
