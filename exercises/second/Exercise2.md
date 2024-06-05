@@ -88,9 +88,22 @@ First of all we have to consider that in my example, the price of token `B` (b) 
 
 
 ### Routing
-
+In my example, the two tokens `ETH` and `USDC` are present in a single liquidity pool, where I act the swap. In real case scenarios this might not be completely true. In particular, swaps might be ordered on DEX aggregators (e.g. [1inch](https://1inch.io/)), which have access to multiple liquidity pools. Thus, there can exist multiple possible routes going from `ETH` to `USDC`. 
+Liquidity providers fees, and price slippage might thus induce a variation in the executed buy amount.
 
 ### Price slippage
+Another important factor to consider is price slippage. By the time the order of transaction I am willing to perform is processed by the miners, the price of at least one of the assets I am exchanging in the path connecting `ETH` to `USDC` might have changed. Thus resulting in a different executed buy amount with respect to what I was expecting.
+
+### Mining
+Da capire
+
+### Other users
+Frontrunning, sandwitch attacks, arbitrage, ...
+
+
+### Gas fees
+da capire
+
 
 Connettere un paio e fare l'exchange esemplificativo.
 Qui dovro parlare delle gas-fees e del processo in realta' di mining del mio coso, per cui in realta' noi avremo casini causati da ordini di altri utenti che quindi potranno ridurre il nostro surplus
