@@ -10,7 +10,7 @@
     "orders": {
         "0": {
             "partial_fill": false,
-            "buy_amount": "6000_000000000000000000",
+            "buy_amount": "350000_000000000000000000",
             "sell_amount": "100_000000000000000000",
             "buy_token": "USDC",
             "sell_token": "ETH",

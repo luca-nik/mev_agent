@@ -293,6 +293,8 @@ class agent:
 
         print(" ")
         print("Status:", result.status)
+        if int(result.status) != 0:
+            print('****** ERROR ******')
         print("Message:", result.message)
         print("Number of Iterations:", result.nit)
         print("Number of Function Evaluations:", result.nfev)
