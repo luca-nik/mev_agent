@@ -115,3 +115,6 @@ Dire che in genere quando facciamo degli swaps su aggregatori tipo.., non e' gar
 -multiple hops
 -price slippage
 -non perfect constant-product price functions
+
+
+Go to [third exercise](../third.Exercise3.md)
