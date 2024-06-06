@@ -1,0 +1,19 @@
+{
+    "orders": {
+        "0": {
+            "sell_token": "ETH",
+            "buy_token": "USDC",
+            "limit_sell_amount": "100_000000000000000000",
+            "limit_buy_amount": "350000_000000000000000000",
+            "partial_fill": false}
+    },
+    "venues": {
+        "UNISWAP_USDC_ETH": {
+            "reserves": {
+                "ETH":  "14211_000000000000000000",
+                "USDC": "53804606_000000000000000000"
+            }
+        }
+    }
+}
+
