@@ -98,6 +98,8 @@ The process of mining and the time it takes for a transaction to be included in 
 ### Other Users
 Other market participants can also influence the outcome. Frontrunning, sandwich attacks, and arbitrage are common in DeFi and can significantly impact the price and execution of a swap. For instance, a frontrunner might detect a large swap and place their transaction before it to profit from the expected price movement, resulting in a worse price for the original transaction.
 
+QUI BISOGNA DIRE CHE COME MEV AGENT, PIU CHE GLI ALTRI USERS, SONO GLI ALTRI MEV AGENTS O I MINERS A SECONDA DELLA BLOCKCHAIN. ALTRI ORDINI DI UTENTI POI SONO DA CONSIDERARE E QUINDI L'ORDINE IN CUI ESERGUIRLI, I.E. IL BLOCCO DI ORDINI DI DARE AL VALIDATOR, ETC ETC.
+
 ### Gas Fees
 Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability.
 
