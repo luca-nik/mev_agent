@@ -126,4 +126,9 @@ Nevertheless, the problem of counting simple paths in directed multigraph is rat
 In additon to this, moreover, even if the directed graph wouldn't have mutlti-edged connected vertices, the problem of simple paths detection from `A` to `B` is extremely complex ([#P-complete](https://epubs.siam.org/doi/abs/10.1137/0208032)), and requires [complex numerical techniques](https://arxiv.org/pdf/2103.06102) to be solved efficiently.
 
 ### Results
-Interestingly, adding the `METEORA_USDC_USDT` to the market graph (with the liquidities at the time I exectuted the code) has allowed to increase the surplus of a factor ~58. This could be a rather interesting example where arbitrage could be exploited, buying `USDT` from `METEORA_USDC_USDT`, selling them back for `USDC` in `UNISWAP_USDC_USDT`. Optimizing this arbitrage problem could be feasible 
+Interestingly, adding the `METEORA_USDC_USDT` to the market graph (with the liquidities at the time I exectuted the code) has allowed to increase the surplus of a factor ~58. This could be a rather interesting example where arbitrage could be exploited, buying `USDT` from `METEORA_USDC_USDT`, selling them back for `USDC` in `UNISWAP_USDC_USDT`.
+
+#### A question for you
+Since I am new to the crypto-world, I might have misunderstood something. Is it really possible to exploit such arbitrage opportunity and coming back with more `USDC` than before, basically for free or am I loosing something here? 
+I mean my concern is regarding the fact that although the price of the `USDC` and `USDT` should be bound to the value of the US dollar, due to liquidities unbalances in the pool, the price of one token with respect to the other is significantly lower when swapping them. I know that this is the base for arbitrage, but I was questioning myself if I was not mistaken or I was not considering something (maybe the price function of the AMM is different from the standard constant product and keeps track of their value with respect to the dollar, ...).  
+Sorry for the naive question, but I was just curious :).
