@@ -1,7 +1,6 @@
 # My solutions to Exercise 3
 
-In this exercise I kept the `USDT`/`USDC` token pair and the same user order.
-I considered the same UNISWAP venue considered in [exercise 2](../second/Exercise2.md). 
+In this exercise I kept the `USDT`/`USDC` token pair, the same user order, and the same UNISWAP venue considered in [exercise 2](../second/Exercise2.md). 
 In addtion to this, I also included a new venue (`METEORA_USDC_USDT`) which is a [liquidity pool of Meteora](https://www.geckoterminal.com/solana/pools/32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG).
 
 In this exercise I run the code [third_exercise.py](third_exercise.py).
