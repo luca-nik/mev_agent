@@ -4,3 +4,7 @@ numpy
 scipy
 sys
 json
+re
+requests
+bs4
+argparse
