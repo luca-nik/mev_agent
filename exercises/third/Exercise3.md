@@ -113,17 +113,14 @@ The surplus generated is 5869_202663322582338878
 I will first discuss some technical details, and then I will focus on the results.
 
 In this case, differently from the previous exercises, the graph is a multi-graph. Indeed the nodes `USDC` and `USDT` are connected by tow distinct edges `UNISWAP_USDC_USDT` and `METEORA_USDC_USDT`.
-To be honest, when I started writing the code for the first exercise, I did not consider this option and thus I had to change the code on-the-fly.
-In any case, we can still perform path-optimization to maximize the surplus also on multigraphs ([See Ref.](https://hal.science/hal-03455981/file/goroen.pdf)).
+To be honest, when I started writing the code for the first exercise, I did not consider this option and thus I had to change the code on-the-fly with some easy-to-implement fixes.
+From a theoretical point of view, the problem of routing on multigraphs is still convex ([See Ref.](https://hal.science/hal-03455981/file/goroen.pdf)).
 
-Thus, the solution I decided to implement is the following. 
-While creating the `mev_agent.strategy` graph, for each pair of nodes connected by N multiple edges I create N distinct paths. This is a rough approach because it is correct if only one pair of nodes is connected by multiple edges. Indeed, if we detect more than one branching, the code will output an error, since it is not built to treat such more complex paths.
+Thus, the solution I decided to implement is the following:
 
-Indeed, in this case I created just two paths and I performed the optimization along these paths. Let us now abstract the problem. If I would have to exchange token `A` with `B` passing through `C`, the possible independent paths connecting `A`/`B` will be dependent on the numbers `N`, `M` of multiple paths connecting `A`/`C` (`N`) and `C`/`B` (`M`). The total number of available paths will be `T = M*N`.
+While creating the `mev_agent.strategy` graph, for each pair of nodes connected by N multiple edges I create N distinct paths. This is a rough approach because it is correct if only one pair of nodes is connected by multiple edges. Indeed, if we detect more than one branching, the code will output an error, since it is not built to treat such more complex paths. Thus in my case, I created just two paths and I performed the optimization along such paths.
 
+Nevertheless, the problem of counting simple paths in directed multigraph is rather interesting. If I would have to exchange token `A` with `B` passing through `C`, the possible independent paths connecting `A`/`B` will be dependent on the numbers `N`, `M` of multiple paths connecting `A`/`C` (`N`) and `C`/`B` (`M`). The total number of available paths in this case will be `T = M*N`. However, also this is again a rough oversimplification of the problem which is combinatorial by nature and gets exteremely comlex as the dimension of the graph starts increasing. 
 
-Connettere un paio e fare l'exchange esemplificativo.
-Qui dovro parlare delle gas-fees e del processo in realta' di mining del mio coso, per cui in realta' noi avremo casini causati da ordini di altri utenti che quindi potranno ridurre il nostro surplus
+In additon to this, moreover, even if the directed graph wouldn't have mutlti-edged connected vertices, the problem of simple paths detection from `A` to `B` is extremely complex ([#P-complete](https://epubs.siam.org/doi/abs/10.1137/0208032)), and requires [complex numerical techniques](https://arxiv.org/pdf/2103.06102) to be solved efficiently.
 
-Inoltre dovro' vedere anche cosa vuol dire lo slippage.
-Vedere in uniswap v3 come calcolano lo scambio, magari in alcune liquididty pools la funzione di prezzo non e' proprio giusta giusta.
