@@ -77,7 +77,11 @@ The surplus generated is 100_863301171706666537
 ```
 
 ## Discussion
-When comparing this result with real swaps, several factors might influence our outcome. In the following, I will address some of these factors.
+The code I am running in this exercise is the same of the previous. Thus, we are trying to maximize the surplus along all the simlpe paths connecting `USDC`\`USDT`, which in this case is just one. 
+Given the almost equal liquidity of the two tokens in the `UNISWAP_USDC_USDT` pool at the time I gathered the data, the amount of `USDC` tokens bought is not extremely high.
+
+However, this is an ideal condition. 
+Indeed, when comparing this result with real swaps, several factors might influence our outcome. In the following, I will try to address some of these factors.
 
 ### Liquidity Pool Providers' Fee
 First, we must consider that in my example, the price of token `B` (denoted as `b`) in an Automated Market Maker (AMM) will be `b(x) = [B]x/(x + [A])`, where `[A]` and `[B]` are the initial liquidities of the pool of the two tokens and `x` is the amount of token `A` sold. In real-world scenarios, such as on Uniswap, real price functions account for the fee extracted by the liquidity providers for every transaction. This fee is denoted as `0 <= 1 - γ < 1`, and the price function becomes `b(x) = [B]γx/(γx + [A])`. This adjustment means that part of the transaction is taken as a fee, affecting the resulting price and received amount of token `B`.
