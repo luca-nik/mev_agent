@@ -12,7 +12,7 @@ At this point the procedure is analogous to the other two exercises. We create a
 ## Note
 The `METEORA_USDC_USDT` liquidity is updated on-the-fly, thus to reproduce my results, one need to run the following code:
 ```console
-~$ python3 reproduce_results.py
+user@pc:~$PATH-TO-MY-CODE/exercises/third$ python3 reproduce_results.py
 ```
 Which takes as input [my_data.json](my_data.json) which contins the liquidities of the tokens at the time I executed the code.
 
