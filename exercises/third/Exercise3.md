@@ -18,7 +18,7 @@ Which takes as input [my_data.json](my_data.json) which contins the liquidities 
 
 
 ## Results
-Input:
+Input (after data collection from the online pool):
 ```json
 {
     "orders": {
