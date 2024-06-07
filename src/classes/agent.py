@@ -127,23 +127,25 @@ class agent:
             Prints additional information
         """
         split = 1
-        for i in range(len(path) - 1):
+        for i in range(len(path) - 1): # Go through the path
             token1 = path[i]
             token2 = path[i + 1]
             if market.graph.has_edge(token1, token2):
+                # gather edge data information from the market graph
                 edge_data = market.graph[token1][token2]
                 venues = edge_data['venues']
                 for ven_indx, venue in enumerate(venues):
+                    # Gather information from the venues in that edge
                     sell_token_number = edge_data['tokens'][ven_indx].index(token1) + 1
                     buy_token_number = edge_data['tokens'][ven_indx].index(token2) + 1
                     liquidity_sell_token = edge_data['liquidity_token' + str(sell_token_number)][ven_indx]
                     liquidity_buy_token = edge_data['liquidity_token' + str(buy_token_number)][ven_indx]
+
                     if verbose:
                         print(f"Venue: {venue}, Sell Token: {token1}, Buy Token: {token2}, Liquidity: {liquidity_sell_token} {token1}, {liquidity_buy_token} {token2}")
 
-                    # Construct strategy graph, assign the price_function to the edge (constant product AMM)
-                    if self.strategy.has_edge(token1,token2):
-                        # If edge already exists, update the  attributes
+                    # Construct strategy graph, assign the price_function, and all the data needed for the trade in each edge
+                    if self.strategy.has_edge(token1,token2): # Multigraph, update appending the new variables
                         self.strategy[token1][token2]['venue'].append(venue)
                         self.strategy[token1][token2]['price_function'].append(market.price_function)
                         self.strategy[token1][token2]['liquidity_sell_token'].append(liquidity_sell_token)
@@ -153,6 +155,12 @@ class agent:
                         self.strategy.add_edge(token1, token2, sell_token=token1, buy_token=token2, venue=[venue], price_function=[market.price_function],
                                                liquidity_sell_token=[liquidity_sell_token], 
                                                liquidity_buy_token=[liquidity_buy_token])
+
+        # Approximation. If the multigraph is too complex I exit.
+        if (split > 2 and len(path) > 2) : # I have more than 2 splitting and a more than 2 tokens. Of course it is an approximation to make the code work in the third exercise.
+            print('**********************')
+            print('ERROR: the market multigraph is too complex.')
+            sys.exit()
 
         # Store the paths where the agent will have to propagate
         edges =[[] for i in range(split)]
@@ -174,7 +182,7 @@ class agent:
                     edge_to_append['liquidity_buy_token']  = edge_to_append['liquidity_buy_token'][0]
                     edges[path_indx].append(edge_to_append) 
 
-        #
+        # Create the paths as a list of edges with the specific information
         for edge in edges:
             self.paths.append(edge)
 
