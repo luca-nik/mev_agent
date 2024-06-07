@@ -1,6 +1,5 @@
 import sys
 import os
-import argparse
 import json
 from matplotlib import pyplot as plt
 
