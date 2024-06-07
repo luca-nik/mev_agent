@@ -5,7 +5,7 @@ import json
 from matplotlib import pyplot as plt
 
 # Add the src directory to the system path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../src')))
 
 import mev_project_interface as interface
 
@@ -18,6 +18,6 @@ if __name__ == "__main__":
         print("Error: No file path provided. Please provide the path to the JSON file.")
         sys.exit(1)
     
-    interface.main(args.file_path, plot_strategy = True)
+    interface.main(args.file_path, plot_strategy = False)
 
 

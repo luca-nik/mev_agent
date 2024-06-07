@@ -3,6 +3,10 @@ import os
 import argparse
 import json
 from matplotlib import pyplot as plt
+import re
+import requests
+from bs4 import BeautifulSoup
+import numpy as np
 
 # Add the src directory to the system path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
@@ -107,7 +111,7 @@ def main(file_path, plot_strategy=False, verbose=False):
 
 def add_venue_to_json(url, token1, token2, json_file):
 
-    print('Loading data from ' + url
+    print('Loading data from ' + url)
     response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
     
     # Check if the request was successful
@@ -135,8 +139,8 @@ def add_venue_to_json(url, token1, token2, json_file):
                 token2_match = re.search(rf'pooled {token2} is ([\d,\.]+)', line)
     
                 if token1_match and token2_match:
-                    token1_value = float64(token1_match.group(1).replace(',', ''))
-                    token2_value = float64(token2_match.group(1).replace(',', ''))
+                    token1_value = np.float64(token1_match.group(1).replace(',', ''))
+                    token2_value = np.float64(token2_match.group(1).replace(',', ''))
     
                     print(f"Extracted {token1} value: {token1_value}")
                     print(f"Extracted {token2} value: {token2_value}")

@@ -1,0 +1,21 @@
+{
+    "venues": {
+        "METEORA_USDC_USDT": {
+            "sell_token": "USDT",
+            "buy_token": "USDC",
+            "ex_buy_amount": "100000_000000000000000000",
+            "ex_sell_amount": "9239_681672778340725927"
+        }
+    },
+    "orders": {
+        "0": {
+            "partial_fill": false,
+            "buy_amount": "350_000000000000000000",
+            "sell_amount": "100000_000000000000000000",
+            "buy_token": "USDT",
+            "sell_token": "USDC",
+            "ex_buy_amount": "9239_681672778340725927",
+            "ex_sell_amount": "100000_000000000000000000"
+        }
+    }
+}
