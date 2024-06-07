@@ -77,7 +77,7 @@ The surplus generated is 100_863301171706666537
 ```
 
 ## Discussion
-The code I am running in this exercise is the same of the previous. Thus, we are trying to maximize the surplus along all the simlpe paths connecting `USDC`\`USDT`, which in this case is just one. 
+The code I am running in this exercise is the same of the previous. Thus, we are trying to maximize the surplus along all the simlpe paths connecting `USDC`/`USDT`, which in this case is just one. 
 Given the almost equal liquidity of the two tokens in the `UNISWAP_USDC_USDT` pool at the time I gathered the data, the amount of `USDC` tokens bought is not extremely high.
 
 However, this is an ideal condition. 
@@ -89,37 +89,15 @@ First, we must consider that in my example, the price of token `B` (denoted as `
 ### Price Function
 In real AMM models, the price function is often influenced by more complex algorithms. For example, Uniswap V3 uses a concentrated liquidity model, where liquidity is provided within specific price ranges. This makes the price function more dynamic and complex compared to a simple constant product formula.
 
-### Routing
-In my example, the two tokens `USDT` and `USDC` are present in a single liquidity pool, where I perform the swap. In real-world scenarios, this might not always be the case. Swaps are often executed on DEX aggregators (e.g., [1inch](https://1inch.io/)), which have access to multiple liquidity pools. Thus, there can be multiple possible routes from `USDT` to `USDC`. The routing algorithm will seek the best price across various pools, which can lead to variations in the executed buy amount due to differences in liquidity, fees, and slippage across routes.
-
 ### Price Slippage
-Another important factor to consider is price slippage. By the time the transaction order I intend to perform is processed by the miners, the price of at least one of the assets in the path connecting `USDT` to `USDC` might have changed. This can result in a different executed buy amount than what was initially expected. Slippage is more significant in volatile markets or with large order sizes relative to the liquidity available in the pool.
-
-### Mining
-The process of mining and the time it takes for a transaction to be included in a block can also impact the outcome. During this period, market conditions can change, and other transactions can alter the state of the liquidity pool. This can lead to differences between the expected and the actual execution price.
+Another important factor to consider is price slippage. By the time the transaction order I intend to perform is processed by the miners or the block containing our transaction is validated, the price of at least one of the assets in the path connecting `USDT` to `USDC` might have changed. This can result in a different executed buy amount than what was initially expected. Slippage is more significant in volatile markets or with large order sizes relative to the liquidity available in the pool.
 
 ### Other Users
-Other market participants can also influence the outcome. Frontrunning, sandwich attacks, and arbitrage are common in DeFi and can significantly impact the price and execution of a swap. For instance, a frontrunner might detect a large swap and place their transaction before it to profit from the expected price movement, resulting in a worse price for the original transaction.
-
-QUI BISOGNA DIRE CHE COME MEV AGENT, PIU CHE GLI ALTRI USERS, SONO GLI ALTRI MEV AGENTS O I MINERS A SECONDA DELLA BLOCKCHAIN. ALTRI ORDINI DI UTENTI POI SONO DA CONSIDERARE E QUINDI L'ORDINE IN CUI ESERGUIRLI, I.E. IL BLOCCO DI ORDINI DI DARE AL VALIDATOR, ETC ETC.
+Other market participants can also largely influence the outcome. The order the transactions are inseted in a specific block, might once again cause price slippage. In additon to this, miners can identify MEV opportunities 
+and leveraging trades censorship, frontrunning or sandwitch attack they can significantly impact the price and execution of a swap. For instance, a frontrunner might detect a large swap and place their transaction before it to profit from the expected price movement, resulting in a worse price for the original transaction.
 
 ### Gas Fees
-Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability.
-
-# Altro
-Connettere un paio e fare l'exchange esemplificativo.
-Qui dovro parlare delle gas-fees e del processo in realta' di mining del mio coso, per cui in realta' noi avremo casini causati da ordini di altri utenti che quindi potranno ridurre il nostro surplus
-
-Inoltre dovro' vedere anche cosa vuol dire lo slippage.
-Vedere in uniswap v3 come calcolano lo scambio, magari in alcune liquididty pools la funzione di prezzo non e' proprio giusta giusta.
-
-
-Dire che in genere quando facciamo degli swaps su aggregatori tipo.., non e' garantito che sia a singolo hop, quindi non necessariamente avro gli stessi risultati.
-
--gas prices
--multiple hops
--price slippage
--non perfect constant-product price functions
+Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability. In addition to this, MEV bots identifying possible profitable trades, might start competing effectively startgin a gas-auction, and congesting the network. 
 
 
 Go to [third exercise](../third.Exercise3.md)
