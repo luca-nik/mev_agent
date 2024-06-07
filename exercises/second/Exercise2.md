@@ -100,4 +100,4 @@ and leveraging trades censorship, frontrunning or sandwitch attack they can sign
 Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability. In addition to this, MEV bots identifying possible profitable trades, might start competing effectively startgin a gas-auction, and congesting the network. 
 
 
-Go to [third exercise](../third.Exercise3.md)
+Go to [third exercise](../third/Exercise3.md) ...
