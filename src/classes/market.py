@@ -39,28 +39,35 @@ class market:
 
     def generate_graph(self):
         """
-        Generates a graph from the venues.
+        Generates a graph from the venues and prints the name of each edge.
         """
         for venue in self.venues:
             for token, amount in venue.reserves.items():
                 if token not in self.graph:
                     self.graph.add_node(token)
 
-            # Ensure each pair of tokens creates an edge with the venue name as attribute only once
+        # Create graph
+        for venue in self.venues:
             tokens = list(venue.reserves.keys())
             for i in range(len(tokens)):
                 for j in range(i + 1, len(tokens)):
                     token1 = tokens[i]
                     token2 = tokens[j]
-                    if not self.graph.has_edge(token1, token2):
-                        self.graph.add_edge(token1, token2, venues=[venue.name],
-                                            tokens = [token1, token2],
-                                            liquidity_token1 = venue.reserves[token1], 
-                                            liquidity_token2 = venue.reserves[token2]) 
+                    # Check if edge exists already
+                    if self.graph.has_edge(token1, token2):
+                        # If edge already exists, update the 'venues' attribute
+                        self.graph[token1][token2]['venues'].append(venue.name)
+                        self.graph[token1][token2]['tokens'].append([token1,token2])
+                        self.graph[token1][token2]['liquidity_token1'].append(venue.reserves[token1])
+                        self.graph[token1][token2]['liquidity_token2'].append(venue.reserves[token2])
                     else:
-                        # If still nameless, name the edge
-                        if venue.name not in self.graph[token1][token2]['venues']:
-                            self.graph[token1][token2]['venues'].append(venue.name)
+                        # Otherwise, add a new edge with venue name as attribute
+                        self.graph.add_edge(token1, token2,
+                                            venues=[venue.name],
+                                            tokens=[[token1, token2]],
+                                            liquidity_token1=[venue.reserves[token1]],
+                                            liquidity_token2=[venue.reserves[token2]])
+        
 
     def plot_graph(self, file=None, verbose=False):
         """

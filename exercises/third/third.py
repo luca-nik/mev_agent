@@ -18,7 +18,7 @@ url = "https://www.geckoterminal.com/solana/pools/32D4zRxNc1EssbJieVHfPhZM3rH6Cz
 token1 = "USDC"
 token2 = "USDT"
 
-#interface.add_venue_to_json(url, token1, token2, json_file)
+interface.add_venue_to_json(url, token1, token2, json_file)
 interface.main(json_file, plot_strategy=True)
 
 

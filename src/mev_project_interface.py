@@ -109,7 +109,7 @@ def main(file_path, plot_strategy=False, verbose=False):
     # Output results in JSON file
     Agent.print_results(file=file_path.split('.json')[0]+'-results.json')
 
-def add_venue_to_json(url, token1, token2, json_file):
+def add_venue_to_json(url, token1, token2, json_file, delete_tmp = True):
 
     print('Loading data from ' + url)
     response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -142,14 +142,17 @@ def add_venue_to_json(url, token1, token2, json_file):
                     token1_value = np.float64(token1_match.group(1).replace(',', ''))
                     token2_value = np.float64(token2_match.group(1).replace(',', ''))
     
-                    print(f"Extracted {token1} value: {token1_value}")
-                    print(f"Extracted {token2} value: {token2_value}")
+                    print(" ")
+                    print(f"Extracted {token1} liquidity: {token1_value}")
+                    print(f"Extracted {token2} liquidity: {token2_value}")
+                    print(" ")
                 else:
                     print("Values not found in the line")
     
         # Delete the file after processing
-        os.remove('pool_data.html')
-        print("File 'pool_data.html' has been deleted.")
+        if delete_tmp:
+            os.remove('pool_data.html')
+            print("Temporary 'pool_data.html' file storing pool information has been deleted.")
     
     # Load the existing JSON data
     json_file = 'data.json'
@@ -171,6 +174,6 @@ def add_venue_to_json(url, token1, token2, json_file):
         # Save the updated JSON back to the file
         with open(json_file, 'w') as file:
             json.dump(data, file, indent=4)
-        print("New venue added to the JSON file.")
+        print("New venue " + venue_name + " added to the JSON file " + json_file)
     else:
         print("No valid token values were extracted.")

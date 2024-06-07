@@ -126,28 +126,57 @@ class agent:
         verbose: bool
             Prints additional information
         """
+        split = 1
         for i in range(len(path) - 1):
             token1 = path[i]
             token2 = path[i + 1]
             if market.graph.has_edge(token1, token2):
                 edge_data = market.graph[token1][token2]
                 venues = edge_data['venues']
-                for venue in venues:
-                    sell_token_number = edge_data['tokens'].index(token1) + 1
-                    buy_token_number = edge_data['tokens'].index(token2) + 1
-                    liquidity_sell_token = edge_data['liquidity_token' + str(sell_token_number)]
-                    liquidity_buy_token = edge_data['liquidity_token' + str(buy_token_number)]
+                for ven_indx, venue in enumerate(venues):
+                    sell_token_number = edge_data['tokens'][ven_indx].index(token1) + 1
+                    buy_token_number = edge_data['tokens'][ven_indx].index(token2) + 1
+                    liquidity_sell_token = edge_data['liquidity_token' + str(sell_token_number)][ven_indx]
+                    liquidity_buy_token = edge_data['liquidity_token' + str(buy_token_number)][ven_indx]
                     if verbose:
                         print(f"Venue: {venue}, Sell Token: {token1}, Buy Token: {token2}, Liquidity: {liquidity_sell_token} {token1}, {liquidity_buy_token} {token2}")
 
                     # Construct strategy graph, assign the price_function to the edge (constant product AMM)
-                    self.strategy.add_edge(token1, token2, sell_token=token1, buy_token=token2, venue=venue, price_function=market.price_function,
-                                           liquidity_sell_token=liquidity_sell_token, 
-                                           liquidity_buy_token=liquidity_buy_token)
+                    if self.strategy.has_edge(token1,token2):
+                        # If edge already exists, update the  attributes
+                        self.strategy[token1][token2]['venue'].append(venue)
+                        self.strategy[token1][token2]['price_function'].append(market.price_function)
+                        self.strategy[token1][token2]['liquidity_sell_token'].append(liquidity_sell_token)
+                        self.strategy[token1][token2]['liquidity_buy_token'].append(liquidity_buy_token)
+                        split += 1 #variable needed to construct split paths for multigraphs
+                    else:
+                        self.strategy.add_edge(token1, token2, sell_token=token1, buy_token=token2, venue=[venue], price_function=[market.price_function],
+                                               liquidity_sell_token=[liquidity_sell_token], 
+                                               liquidity_buy_token=[liquidity_buy_token])
 
         # Store the paths where the agent will have to propagate
-        edges = [self.strategy.edges[path[i], path[i+1]] for i in range(len(path)-1)]
-        self.paths.append(edges)
+        edges =[[] for i in range(split)]
+        for path_indx in range(split):
+            for i in range(len(path)-1):
+                if(len(self.strategy[path[i]][path[i+1]]['venue']) > 1): #is a multigraph, split the path
+                    # Copy the values of the specific path and flatten them out
+                    edge_to_append = self.strategy[path[i]][path[i+1]].copy()
+                    edge_to_append['venue'] = edge_to_append['venue'][path_indx]
+                    edge_to_append['price_function'] = edge_to_append['price_function'][path_indx]
+                    edge_to_append['liquidity_sell_token'] = edge_to_append['liquidity_sell_token'][path_indx]
+                    edge_to_append['liquidity_buy_token']  = edge_to_append['liquidity_buy_token'][path_indx]
+                    edges[path_indx].append(edge_to_append) 
+                else:
+                    edge_to_append = self.strategy.edges[path[i], path[i+1]].copy()
+                    edge_to_append['venue'] = edge_to_append['venue'][0]
+                    edge_to_append['price_function'] = edge_to_append['price_function'][0]
+                    edge_to_append['liquidity_sell_token'] = edge_to_append['liquidity_sell_token'][0]
+                    edge_to_append['liquidity_buy_token']  = edge_to_append['liquidity_buy_token'][0]
+                    edges[path_indx].append(edge_to_append) 
+
+        #
+        for edge in edges:
+            self.paths.append(edge)
 
     def plot_strategy(self):
         """
@@ -262,13 +291,10 @@ class agent:
         nlc2 = NonlinearConstraint(constraint_buy, 0, np.inf)
         constraints.append(nlc2)
 
-        options = {
-            'ftol': 1e-6,  # Convergence tolerance for the objective function
-            'maxiter': 1000  # Maximum number of iterations
-        }
 
         print(" ")
         print("MEV Agent ready to maximize the surplus .. or at least trying :)")
+
         # Initial guesses for sell amount through each path
         initial_guess = [0.0] * len(self.paths)
 
@@ -276,7 +302,7 @@ class agent:
         bounds = Bounds([0.0] * len(self.paths), [self.order.limit_sell_amount] * len(self.paths))
 
 
-        result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints, options=options)
+        result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints)
 
 
         # Extract the optimal values
@@ -294,7 +320,7 @@ class agent:
         print(" ")
         print("Status:", result.status)
         if int(result.status) != 0:
-            print('****** ERROR ******')
+            print('****** ERROR ******    :( ')
         print("Message:", result.message)
         print("Number of Iterations:", result.nit)
         print("Number of Function Evaluations:", result.nfev)
@@ -313,9 +339,12 @@ class agent:
         for i, val in enumerate(optimal_coins_sell):
             path = self.paths[i]
             vertices = [path[0]['sell_token']]
+            venues = []
             for edge in path:
                 vertices.append(edge['buy_token'])
+                venues.append(edge['venue'])
             path_str = " -> ".join(vertices)
+            path_str = " -> ".join(venues)
             string_sell = f"The resulting total value sold via   {path_str} is: {val:.18f}"
             string_buy  = f"The resulting total value bought via {path_str} is: {optimal_coins_buy[i]:.18f}"
             print(string_sell)

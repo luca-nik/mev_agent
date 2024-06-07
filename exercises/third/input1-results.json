@@ -10,11 +10,11 @@
     "orders": {
         "0": {
             "partial_fill": false,
-            "buy_amount": "90000000_000000000000000000",
-            "sell_amount": "100000000_000000000000000000",
+            "buy_amount": "900_000000000000000000",
+            "sell_amount": "1000_000000000000000000",
             "buy_token": "KAPPA",
             "sell_token": "RHO",
-            "ex_buy_amount": "909_090909090909008228",
+            "ex_buy_amount": "909_090909090909121915",
             "ex_sell_amount": "1000_000000000000000000"
         }
     }

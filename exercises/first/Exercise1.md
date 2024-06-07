@@ -29,17 +29,18 @@ The resulting total value bought (via all paths) is: 909.090909090909121915
 The resulting gamma is: 9.090909090909121915
 Total coin conservation error: 2.2737368e-13
  
-The resulting total value sold via   RHO -> KAPPA is: 1000.000000000000000000
-The resulting total value bought via RHO -> KAPPA is: 909.090909090909121915
+The resulting total value sold via   AMM_RHO_KAPPA is: 1000.000000000000000000
+The resulting total value bought via AMM_RHO_KAPPA is: 909.090909090909121915
+
 ```
 
 With resulting JSON-file
 ```json
 {
     "venues": {
-        "amm_rho_kappa": {
-            "sell_token": "kappa",
-            "buy_token": "rho",
+        "AMM_RHO_KAPPA": {
+            "sell_token": "KAPPA",
+            "buy_token": "RHO",
             "ex_buy_amount": "1000_000000000000000000",
             "ex_sell_amount": "909_090909090909121915"
         }
@@ -49,8 +50,8 @@ With resulting JSON-file
             "partial_fill": false,
             "buy_amount": "900_000000000000000000",
             "sell_amount": "1000_000000000000000000",
-            "buy_token": "kappa",
-            "sell_token": "rho",
+            "buy_token": "KAPPA",
+            "sell_token": "RHO",
             "ex_buy_amount": "909_090909090909121915",
             "ex_sell_amount": "1000_000000000000000000"
         }
@@ -70,7 +71,7 @@ The surplus generated is 9_090909090909121915
 ### Second Input
 ```console
 luca@lime:~/programmi/mev_agent/exercises/first$ python3 maximize_surplus.py input2.json 
- 
+
 MEV Agent ready to maximize the surplus .. or at least trying :)
  
 Status: 0
@@ -85,9 +86,8 @@ The resulting total value bought (via all paths) is: 1081.081081081081038064
 The resulting gamma is: 181.081081081081038064
 Total coin conservation error: 2.2737368e-13
  
-The resulting total value sold via   TAU -> PI -> PSI is: 1000.000000000000000000
-The resulting total value bought via TAU -> PI -> PSI is: 1081.081081081081038064
-
+The resulting total value sold via   AMM_TAU_PI -> AMM_PI_PSI is: 1000.000000000000000000
+The resulting total value bought via AMM_TAU_PI -> AMM_PI_PSI is: 1081.08108108108103
 ```
 With resulting JSON-file
 ```json
@@ -145,14 +145,14 @@ The resulting total value bought (via all paths) is: 1301.146505249568235740
 The resulting gamma is: 401.146505249528900094
 Total coin conservation error: 1.7053026e-13
  
-The resulting total value sold via   MU -> IOTA -> NU is: 289.078084376014658119
-The resulting total value bought via MU -> IOTA -> NU is: 357.725105722187663559
+The resulting total value sold via   AMM_MU_IOTA -> AMM_IOTA_NU is: 289.078084376014658119
+The resulting total value bought via AMM_MU_IOTA -> AMM_IOTA_NU is: 357.725105722187663559
  
-The resulting total value sold via   MU -> RHO -> NU is: 0.000000000000000000
-The resulting total value bought via MU -> RHO -> NU is: 0.000000000000000000
+The resulting total value sold via   AMM_MU_RHO -> AMM_RHO_NU is: 0.000000000000000000
+The resulting total value bought via AMM_MU_RHO -> AMM_RHO_NU is: 0.000000000000000000
  
-The resulting total value sold via   MU -> CHI -> NU is: 710.921915624029111314
-The resulting total value bought via MU -> CHI -> NU is: 943.421399527380685868
+The resulting total value sold via   AMM_MU_CHI -> AMM_CHI_NU is: 710.921915624029111314
+The resulting total value bought via AMM_MU_CHI -> AMM_CHI_NU is: 943.421399527380685868
 ```
 
 With resulting JSON-file:
