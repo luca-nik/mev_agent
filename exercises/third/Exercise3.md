@@ -112,13 +112,13 @@ The surplus generated is 5869_202663322582338878
 ## Discussion
 I will first discuss some technical details, and then I will focus on the results.
 
-In this case, differently from the previous exercises, the graph is a multi-graph. Indeed the nodes `USDC` and `USDT` are connected by tow distinct edges `UNISWAP_USDC_USDT` and `METEORA_USDC_USDT`.
+In this case, differently from the previous exercises, the graph is a multi-graph. Indeed the nodes `USDC` and `USDT` are connected by two distinct edges `UNISWAP_USDC_USDT` and `METEORA_USDC_USDT`.
 To be honest, when I started writing the code for the first exercise, I did not consider this option and thus I had to change the code on-the-fly with some easy-to-implement fixes.
 From a theoretical point of view, the problem of routing on multigraphs is still convex ([See Ref.](https://hal.science/hal-03455981/file/goroen.pdf)).
 
 Thus, the solution I decided to implement is the following:
 
-While creating the `mev_agent.strategy` graph, for each pair of nodes connected by N multiple edges I create N distinct paths. This is a rough approach because it is correct if only one pair of nodes is connected by multiple edges. Indeed, if we detect more than one branching, the code will output an error, since it is not built to treat such more complex paths. Thus in my case, I created just two paths and I performed the optimization along such paths.
+While creating the `mev_agent.strategy` graph, for each pair of nodes connected by N multiple edges I create N distinct paths. This is a rough approach because it is correct if only one pair of nodes is connected by multiple edges. Indeed, if we detect more than one branching, for paths containing more than just two tokens, the code will output an error, since it is not built to treat such more complex paths. Thus in my case, I created just two paths and I performed the optimization along such paths.
 
 Nevertheless, the problem of counting simple paths in directed multigraph is rather interesting. If I would have to exchange token `A` with `B` passing through `C`, the possible independent paths connecting `A`/`B` will be dependent on the numbers `N`, `M` of multiple paths connecting `A`/`C` (`N`) and `C`/`B` (`M`). The total number of available paths in this case will be `T = M*N`. However, also this is again a rough oversimplification of the problem which is combinatorial by nature and gets exteremely comlex as the dimension of the graph starts increasing. 
 
