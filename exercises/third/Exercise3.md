@@ -47,8 +47,15 @@ Input:
 }
 ```
 ```console
-luca@lime:~/programmi/mev_agent/exercises/third$ python3 third_exercise.py 
+luca@lime:~/programmi/mev_agent/exercises/third$ python3 third_exercise.py
+Loading data from https://www.geckoterminal.com/solana/pools/32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG
  
+Extracted USDC liquidity: 1566122.72
+Extracted USDT liquidity: 10608171.29
+ 
+Temporary 'pool_data.html' file storing pool information has been deleted.
+New venue METEORA_USDC_USDT added to the JSON file data.json
+
 MEV Agent ready to maximize the surplus .. or at least trying :)
  
 Status: 0
