@@ -1,8 +1,8 @@
 # MEV_agent
 <div align="center">
-  <img src="docs/images/mev_agent.png" alt="Diagram">
-  <p style="margin-top: 10px;">Example of a strategy graph where the coins sold and bought along the different channels are highlighted.</p>
+  <img src="docs/images/mev_agent.png" alt="Diagram" style="width: 30%; height: 30%;">
 </div>
+
 This project involves developing a Maximal Extractable Value (MEV) agent designed to optimize order execution by matching a set of order intents with various potential liquidity sources. The goal is to maximize the order's surplus through optimal execution strategies.
 
 ## Table of Contents
