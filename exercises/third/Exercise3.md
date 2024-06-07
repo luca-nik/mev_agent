@@ -112,6 +112,7 @@ The surplus generated is 5869_202663322582338878
 ## Discussion
 I will first discuss some technical details, and then I will focus on the results.
 
+### Technical discussion
 In this case, differently from the previous exercises, the graph is a multi-graph. Indeed the nodes `USDC` and `USDT` are connected by two distinct edges `UNISWAP_USDC_USDT` and `METEORA_USDC_USDT`.
 To be honest, when I started writing the code for the first exercise, I did not consider this option and thus I had to change the code on-the-fly with some easy-to-implement fixes.
 From a theoretical point of view, the problem of routing on multigraphs is still convex ([See Ref.](https://hal.science/hal-03455981/file/goroen.pdf)).
@@ -124,3 +125,5 @@ Nevertheless, the problem of counting simple paths in directed multigraph is rat
 
 In additon to this, moreover, even if the directed graph wouldn't have mutlti-edged connected vertices, the problem of simple paths detection from `A` to `B` is extremely complex ([#P-complete](https://epubs.siam.org/doi/abs/10.1137/0208032)), and requires [complex numerical techniques](https://arxiv.org/pdf/2103.06102) to be solved efficiently.
 
+### Results
+Interestingly, adding the `METEORA_USDC_USDT` to the market graph, given the liquidities at the time I exectuted the code, has allowed to increase the surplus of a factor ~58. This could be a rather interesting example where arbitrage could be exploited, buying `USDT` from `METEORA_USDC_USDT`, selling them back for `USDC` in `UNISWAP_USDC_USDT`.
