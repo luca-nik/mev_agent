@@ -4,8 +4,9 @@ In this exercise I kept the `USDT`/`USDC` token pair and the same user order.
 I considered the same UNISWAP venue considered in [exercise 2](../second/Exercise2.md). 
 In addtion to this, I also included a new venue (`METEORA_USDC_USDT`) which is a [liquidity pool of Meteora](https://www.geckoterminal.com/solana/pools/32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG).
 
-In this exercise I run the code `[third_exercise.py](third_exercise.py)`.
-This code, first identifies the initial JSON-file intent `[data.json](data.json)`
+In this exercise I run the code [third_exercise.py](third_exercise.py).
+
+This code, first identifies the initial JSON-file intent [data.json](data.json).
 
 downloading the liquidity of the tokens in `METEORA_USDC_USDT` from internet, while I am keeping fixed the liquidity in `UNISWAP_USDC_USDT`.
 Once I have inserted into the `data`
