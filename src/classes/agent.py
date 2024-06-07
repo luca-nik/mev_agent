@@ -343,7 +343,6 @@ class agent:
             for edge in path:
                 vertices.append(edge['buy_token'])
                 venues.append(edge['venue'])
-            path_str = " -> ".join(vertices)
             path_str = " -> ".join(venues)
             string_sell = f"The resulting total value sold via   {path_str} is: {val:.18f}"
             string_buy  = f"The resulting total value bought via {path_str} is: {optimal_coins_buy[i]:.18f}"

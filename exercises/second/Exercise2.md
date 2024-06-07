@@ -1,8 +1,8 @@
 # My solutions to Exercise 2
 
-In this exercise I choose `ETH` and `USDC` as token pairs to swap.
+In this exercise I choose to swap the token pair `USDT`/`USDC`.
 
-For the reserves I considered a [liquidity pool on Uniswap](https://v2.info.uniswap.org/pair/0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc) in date 5 June 2024.
+For the reserves I considered a [liquidity pool on Uniswap](https://v2.info.uniswap.org/pair/0x3041cbd36888becc7bbcbc0045e3b1f144466f5f) in date 7 June 2024.
 
 In the following the JSON file of the input provided to the `maximize_mev.py` code.
 
@@ -10,17 +10,17 @@ In the following the JSON file of the input provided to the `maximize_mev.py` co
 {
     "orders": {
         "0": {
-            "sell_token": "ETH",
-            "buy_token": "USDC",
-            "limit_sell_amount": "100_000000000000000000",
-            "limit_buy_amount": "35000_000000000000000000",
+            "sell_token": "USDC",
+            "buy_token": "USDT",
+            "limit_sell_amount": "1000_000000000000000000",
+            "limit_buy_amount": "900_000000000000000000",
             "partial_fill": false}
     },
     "venues": {
-        "UNISWAP_USDC_ETH": {
+        "UNISWAP_USDC_USDT": {
             "reserves": {
-                "ETH":  "14211_000000000000000000",
-                "USDC": "53804606_000000000000000000"
+                "USDT":  "2394046_000000000000000000",
+                "USDC":  "2390981_000000000000000000"
             }
         }
     }
@@ -41,40 +41,39 @@ Number of Function Evaluations: 4
 Number of Gradient Evaluations: 2
  
  
-The resulting total value sold   (via all paths) is: 100.000000000000000000
-The resulting total value bought (via all paths) is: 375966.780797987594269216
-The resulting gamma is: 25966.780797987594269216
-Total coin conservation error: 1.4210855e-14
+The resulting total value sold   (via all paths) is: 1000.000000000000000000
+The resulting total value bought (via all paths) is: 1000.863301171706666537
+The resulting gamma is: 100.863301171706666537
+Total coin conservation error: 1.1368684e-13
  
-The resulting total value sold via   ETH -> USDC is: 100.000000000000000000
-The resulting total value bought via ETH -> USDC is: 375966.78079798759426921
+The resulting total value sold via   UNISWAP_USDC_USDT is: 1000.000000000000000000
+The resulting total value bought via UNISWAP_USDC_USDT is: 1000.863301171706666537
 ```
 ```json
 {
-   "venues": {
-        "UNISWAP_USDC_ETH": {
-            "sell_token": "USDC",
-            "buy_token": "ETH",
-            "ex_buy_amount": "100_000000000000000000",
-            "ex_sell_amount": "375966_780797987594269216"
+    "venues": {
+        "UNISWAP_USDC_USDT": {
+            "sell_token": "USDT",
+            "buy_token": "USDC",
+            "ex_buy_amount": "1000_000000000000000000",
+            "ex_sell_amount": "1000_863301171706666537"
         }
     },
     "orders": {
         "0": {
             "partial_fill": false,
-            "buy_amount": "350000_000000000000000000",
-            "sell_amount": "100_000000000000000000",
-            "buy_token": "USDC",
-            "sell_token": "ETH",
-            "ex_buy_amount": "375966_780797987594269216",
-            "ex_sell_amount": "100_000000000000000000"
+            "buy_amount": "900_000000000000000000",
+            "sell_amount": "1000_000000000000000000",
+            "buy_token": "USDT",
+            "sell_token": "USDC",
+            "ex_buy_amount": "1000_863301171706666537",
+            "ex_sell_amount": "1000_000000000000000000"
         }
     }
 }
 ```
-
 ```
-The surplus generated is 25966_780797987594269216
+The surplus generated is 100_863301171706666537
 ```
 
 ## Discussion
@@ -87,10 +86,10 @@ First, we must consider that in my example, the price of token `B` (denoted as `
 In real AMM models, the price function is often influenced by more complex algorithms. For example, Uniswap V3 uses a concentrated liquidity model, where liquidity is provided within specific price ranges. This makes the price function more dynamic and complex compared to a simple constant product formula.
 
 ### Routing
-In my example, the two tokens `ETH` and `USDC` are present in a single liquidity pool, where I perform the swap. In real-world scenarios, this might not always be the case. Swaps are often executed on DEX aggregators (e.g., [1inch](https://1inch.io/)), which have access to multiple liquidity pools. Thus, there can be multiple possible routes from `ETH` to `USDC`. The routing algorithm will seek the best price across various pools, which can lead to variations in the executed buy amount due to differences in liquidity, fees, and slippage across routes.
+In my example, the two tokens `USDT` and `USDC` are present in a single liquidity pool, where I perform the swap. In real-world scenarios, this might not always be the case. Swaps are often executed on DEX aggregators (e.g., [1inch](https://1inch.io/)), which have access to multiple liquidity pools. Thus, there can be multiple possible routes from `USDT` to `USDC`. The routing algorithm will seek the best price across various pools, which can lead to variations in the executed buy amount due to differences in liquidity, fees, and slippage across routes.
 
 ### Price Slippage
-Another important factor to consider is price slippage. By the time the transaction order I intend to perform is processed by the miners, the price of at least one of the assets in the path connecting `ETH` to `USDC` might have changed. This can result in a different executed buy amount than what was initially expected. Slippage is more significant in volatile markets or with large order sizes relative to the liquidity available in the pool.
+Another important factor to consider is price slippage. By the time the transaction order I intend to perform is processed by the miners, the price of at least one of the assets in the path connecting `USDT` to `USDC` might have changed. This can result in a different executed buy amount than what was initially expected. Slippage is more significant in volatile markets or with large order sizes relative to the liquidity available in the pool.
 
 ### Mining
 The process of mining and the time it takes for a transaction to be included in a block can also impact the outcome. During this period, market conditions can change, and other transactions can alter the state of the liquidity pool. This can lead to differences between the expected and the actual execution price.

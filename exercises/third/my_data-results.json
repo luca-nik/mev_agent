@@ -3,8 +3,14 @@
         "UNISWAP_USDC_USDT": {
             "sell_token": "USDT",
             "buy_token": "USDC",
-            "ex_buy_amount": "1000_000000000000000000",
-            "ex_sell_amount": "1000_863301171706666537"
+            "ex_buy_amount": "0_000000002510027741",
+            "ex_sell_amount": "0_000000002513245347"
+        },
+        "METEORA_USDC_USDT": {
+            "sell_token": "USDT",
+            "buy_token": "USDC",
+            "ex_buy_amount": "999_999999997490021997",
+            "ex_sell_amount": "6769_202663320069405017"
         }
     },
     "orders": {
@@ -14,7 +20,7 @@
             "sell_amount": "1000_000000000000000000",
             "buy_token": "USDT",
             "sell_token": "USDC",
-            "ex_buy_amount": "1000_863301171706666537",
+            "ex_buy_amount": "6769_202663322582338878",
             "ex_sell_amount": "1000_000000000000000000"
         }
     }
