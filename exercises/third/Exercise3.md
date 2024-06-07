@@ -6,19 +6,20 @@ In addtion to this, I also included a new venue (`METEORA_USDC_USDT`) which is a
 
 In this exercise I run the code [third_exercise.py](third_exercise.py).
 
-This code, first identifies the initial JSON-file intent [data.json](data.json).
+This code, first identifies the initial JSON-file intent [data.json](data.json). Then it [downloads from the internet](https://www.geckoterminal.com/solana/pools/32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG) the liquidities of the selected tokens creating a new venue called `METEORA_USDC_USDT`. The liquidity in `UNISWAP_USDC_USDT` is kept fixed.
 
-downloading the liquidity of the tokens in `METEORA_USDC_USDT` from internet, while I am keeping fixed the liquidity in `UNISWAP_USDC_USDT`.
-Once I have inserted into the `data`
+At this point the procedure is analogous to the other two exercises. We create a graph and we try to maximize the surplus along this graph.
 
-To reproduce my results, one need to run the following code:
+## Note
+The `METEORA_USDC_USDT` liquidity is updated on-the-fly, thus to reproduce my results, one need to run the following code:
 ```console
 ~$ python3 reproduce_results.py
 ```
+Which takes as input [my_data.json](my_data.json) which contins the liquidities of the tokens at the time I executed the code.
 
-The input int
 
-
+## Results
+Input:
 ```json
 {
     "orders": {
@@ -69,6 +70,7 @@ The resulting total value bought via UNISWAP_USDC_USDT is: 0.000000002513245347
 The resulting total value sold via   METEORA_USDC_USDT is: 999.999999997490021997
 The resulting total value bought via METEORA_USDC_USDT is: 6769.202663320069405017
 ```
+Resulting output:
 ```json
 {
     "venues": {
