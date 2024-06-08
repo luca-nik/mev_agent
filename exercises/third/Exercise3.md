@@ -126,7 +126,7 @@ In addition to this, even if the directed graph wouldn't have multi-edged connec
 Moreover, in these exercises, we never considered multi-asset venues, which would imply more complex graphs, and for which the price functions could change during propagation. Indeed, if we consider a multi-asset pool, with tokens `A`,`B`, and `C`, it can happen that the price function `c(a)` might change if I first visited this venue but along a different edge of the graph e.g. `A`/`B`. 
 Another source of additional complexity is the possibility that the graph changes through time. Indeed, it might be possible for new venues to be added to the market effectively introducing new connections among the nodes.
 
-Aside from these considerations about the network complexity, an MEV agent should be able to perform the surplus optimization also accounting for multiple user orders (which is not implemented in this simple program I developed), should be capable of evaluating order books to identify possible optimal swaps or ring trades.
+Aside from these considerations about the network complexity, an MEV agent should be able to perform the surplus optimization also accounting for multiple user orders (which is not implemented in this simple program I developed), and should be capable of evaluating order books to identify possible optimal swaps or ring trades.
 
 In short, considering all these factors, our little code appears even smaller in the face of this mountain of complexity.
 
