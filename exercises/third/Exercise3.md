@@ -132,7 +132,7 @@ In short, considering all these factors, our little code appears even smaller in
 
 **Considerations**: Given the complexity of the routing problem in real case scenarios I thought that MEV agents could be developed leveraging [reinforcement-learning](https://huggingface.co/learn/deep-rl-course/unit2/what-is-rl) techniques. One could use real-world data to create a training ground for single or multiple interacting agents, leveraging single or [Multi-Agents Reinforcement Learning](https://huggingface.co/learn/deep-rl-course/unit7/introduction-to-marl) techniques in order to learn optimal behavioral policies given the current market state.
 
-### Results
+### Discussion about the numerical results
 Interestingly, adding the `METEORA_USDC_USDT` to the market graph (with the liquidities at the time I executed the code) has allowed me to increase the surplus by a factor ~58. This could be a rather interesting example where arbitrage could be exploited, buying `USDT` from `METEORA_USDC_USDT`, and selling them back for `USDC` in `UNISWAP_USDC_USDT`.
 
 
