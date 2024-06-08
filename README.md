@@ -1,4 +1,4 @@
-# MEV_agent
+# MEV agent
 <div align="center">
   <img src="docs/images/mev_agent.png" alt="Diagram" style="width: 30%; height: 30%;">
 </div>
