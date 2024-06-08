@@ -222,7 +222,7 @@ In this exercise, we are considering each venue to be a constant product AMM wit
 As reported in the previous images, the `agent` tries to optimize the amount of sold coins through a different graph for each different input.
 In the first case, we only have two nodes connected by a single edge, whereas in the most complex last example we have that coin `MU` is not directly connected to coin `NU`, and thus we have to pass through venues which account for intermediate coins such as `CHI`, `IOTA`, and `RHO`.
 
-Regarding my results, the numerical error is hindering their precision, providing a coin conservation error in the order of 10**-13.
+Regarding my results, the numerical error is hindering their precision, providing a total coin conservation error in the order of 10**-13.
 This is for sure an error in my procedure. Maybe I should have enforced global coin conservation, although I was concerned with the convexity of such constraint.
 Another possibility would have been to try to boost numerical accuracy employing `Decimal`, although I am not aware of Python packages that allow for function minimization with Decimal objects.
 
