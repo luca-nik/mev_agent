@@ -1,4 +1,4 @@
-# My Solutions of Excercise 1
+# My Solution to Excercise 1
 
 To replicate the solutions I provide it is sufficient to run the code 
 ```console
