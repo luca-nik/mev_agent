@@ -130,8 +130,7 @@ Another source of additional complexity is the possibility that the graph change
 
 Aside from these considerations about the network complexity, a MEV agent should be able to perform the surplus optimization also accounting for multiple user orders (which is not implemented in this simple program I developed), should be capable of evaluating order books to indentify possible optimal swaps or ring trades.
 
-In short, considering all these factors, our little code appears tiny and a bit silly under this mountain of complexity :)
-
+In short, considering all these factors, our little code appears even smaller in the face of this mountain of complexity.
 
 ### Results
 Interestingly, adding the `METEORA_USDC_USDT` to the market graph (with the liquidities at the time I exectuted the code) has allowed to increase the surplus of a factor ~58. This could be a rather interesting example where arbitrage could be exploited, buying `USDT` from `METEORA_USDC_USDT`, selling them back for `USDC` in `UNISWAP_USDC_USDT`.
