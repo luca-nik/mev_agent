@@ -218,11 +218,14 @@ The surplus generated is 401_146505249528900094
 </div>
 
 ## Discussion
-In this exercise, we are considering a constant product AMM with zero gas-fees. The price function will thus be b(x) = xB/(A+x)
+In this exercise, we are considering each venue to be a constant product AMM with zero gas-fees. The price function will thus be `b(x) = xB/(A+x)`
+As reported in the previous images, the `agent` tries to optimize the amount of sold coins through a different graph for each different input.
+In the first case, we only have two nodes connected by a single edge, whereas in the most complex last example we have that coin `MU` is not directly connected to coin `NU`, and thus we have to pass through venues which account for intermediate coins such as `CHI`, `IOTA`, and `RHO`.
 
-Regarding my results, the numerical error is hindering the precision of the results, providing a coin conservation error in the order of 10**-13.
+Regarding my results, the numerical error is hindering their precision, providing a coin conservation error in the order of 10**-13.
+This is for sure an error in my procedure. Maybe I should have enforced global coin conservation, although I was concerned with the convexity of such constraint.
+Another possibility would have been to try to boost numerical accuracy employing `Decimal`, although I am not aware of Python packages that allow for function minimization with Decimal objects.
 
-This is for sure an error in my procedure. Maybe I should enforce global coin conservation, although I might be concerned with the convexity of such constraint.
 
 The advantage of this procedure is that it is extremely fast since we are not searching for a global minimum on a rough surface, but rather we just need to find the minimum of such a convex problem. (We are minimizing -surplus).
 Something that has to be noticed is that in all cases we are actually enforcing to sell the complete amount of coins (this is due to the keyword `partial_fill`). In this case, we might not hit the absolute maximum of the surplus.
