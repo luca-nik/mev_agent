@@ -133,6 +133,7 @@ Aside from these considerations about the network complexity, an MEV agent shoul
 In short, considering all these factors, our little code appears even smaller in the face of this mountain of complexity.
 
 **Considerations**
+
 Given the complexity of the routing problem in real case scenarios I tought that MEV agents could be developed leveraging [reinforcement-learning](https://huggingface.co/learn/deep-rl-course/unit2/what-is-rl) tecniques. 
 One could use real world data to create a training ground for single or multiple interacting agents, leveragin single or [Multi-Agents Reinforcement Learning](https://huggingface.co/learn/deep-rl-course/unit7/introduction-to-marl) techniques in order to learn optimal behavioural policies given the current market state.
 
