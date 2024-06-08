@@ -21,7 +21,7 @@ This project is designed to simulate a market with multiple trading venues, each
 - `Market`: Represents a market of trading venues, it is a graph with tokens at the vertices and venues at the edges.
 - `Agent`: Represents a market agent that formulates and optimizes trading strategies.
 
-The idea is that given a user `Order` containing the intent of buying `token2` selling `token1`, with the worst acceptable exchange rate, `Agent` will read `Market` and construct a `strategy` to exchange such tokens.
+The idea is that given a user `Order` containing the intent of buying `token2` and selling `token1`, with the worst acceptable exchange rate, `Agent` will read `Market` and construct a `strategy` to exchange such tokens.
 
 `strategy` is a directed graph connecting the nodes of the different tokens by means of edges, which are the venues where the tokens at the corresponding nodes can be exchanged. 
 The graph direction is from `token1` to `token2`.
@@ -32,13 +32,13 @@ The graph direction is from `token1` to `token2`.
 </div>
 
 
-Knowing the user intent, and the possible paths in the market connecting the desired user tokens, `Agent` can now search for the optimal coin exchange among the directed paths to maximize the user surplus. 
+Knowing the user intent, and the possible paths in the market connecting the desired user tokens, the `Agent` can now search for the optimal coin exchange among the directed paths to maximize the user surplus. 
 
 ![Equation](docs/images/surplus_maximization_equation.png)
 
 With `N` being the number of simple paths connecting `token1` with `token2` in the strategy graph. 
 
-In case the keyword `partial_fill = false` in the user order, the condition for the total amount of coins sold will be a strict equality (*Fly-or-kill* situation).
+In case the keyword `partial_fill = false` is in the user order, the condition for the total amount of coins sold will be strict equality (*Fly-or-kill* situation).
 
 <div align="center">
   <img src="docs/images/example_strategy-paths.png" alt="Diagram">
@@ -62,8 +62,8 @@ Since the [forward-routing problem is convex](https://hal.science/hal-03455981/f
     ```
 
 ## Usage
-To use the code we need first to add to the system path `path-to-src`, i.e. the path to the `src` folder containing the python codes.
-Then we only need to import [`mev_project_interface`](docs/mev_project_interface.md) and run its procedure `main` specifying the JSON-file containing user orders and market venues.
+To use the code we need first to add to the system path `path-to-src`, i.e. the path to the `src` folder containing the Python codes.
+Then we only need to import [`mev_project_interface`](docs/mev_project_interface.md) and run its procedure `main` specifying the JSON file containing user orders and market venues.
 
 ### Example Usage
 
@@ -130,7 +130,7 @@ The resulting total value sold via   COIN1 -> COIN2 is: 1000.000000000000000000
 The resulting total value bought via COIN1 -> COIN2 is: 18181.818181818187440513
 ```
 
-Moreover an extra JSON-file called `test1-results.json` is created
+Moreover, an extra JSON-file called `test1-results.json` is created
 
 ```json
 {
@@ -157,7 +157,7 @@ Moreover an extra JSON-file called `test1-results.json` is created
 ```
 ## Exercises
 
-In the following links I report my solutions to the excercises provided.
+In the following links, I report my solutions to the exercises provided.
 
 - [Exercise 1](exercises/first/Exercise1.md)
 - [Exercise 2](exercises/second/Exercise2.md)
@@ -167,4 +167,3 @@ In the following links I report my solutions to the excercises provided.
 ## Documentation
 
 For detailed documentation, please refer to [documentation](docs/DOCUMENTATION.md).
-
