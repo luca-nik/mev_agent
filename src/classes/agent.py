@@ -73,6 +73,24 @@ class agent:
         """
         Evaluates paths in the market connecting sell_token with buy_token of the current order.
         Identifies the venues to visit and the sell and buy tokens for each venue.
+        Calling agent.make_strategy() this method also creates the strategy graph and the 
+        paths the agent needs to follow.
+
+        This method performs the following steps:
+        1. Checks if there is an existing order. If not, prints a message and returns.
+        2. Initializes `sell_token` and `buy_token` from the current order.
+        3. Copies the market venues to the agent's venues.
+        4. Attempts to find all simple paths from `sell_token` to `buy_token` in the market graph:
+           - If paths are found:
+             a. Initializes the strategy graph (`self.strategy`) as a directed graph.
+             b. Initializes `self.paths` as an empty list.
+             c. Prints the paths if `verbose` is `True`.
+             d. Iterates over each path, printing the path and calling `self.make_strategy` to create and store strategy information.
+           - If no paths are found, prints a message indicating so.
+        5. Catches `nx.NetworkXNoPath` exception and prints a message if no paths are found.
+
+        Note:
+            - Paths connecting token A to B are a list of token names e.g. [A, C, D, B]
         
         Parameters:
         -----------
@@ -110,12 +128,29 @@ class agent:
 
     def make_strategy(self, path, market, verbose=False):
         """
-        Given a market path, it identifies the venues to visit and the sell and buy tokens for each venue.
-        It constructs the strategy graph. It stores the edges of the graphs for future propagation
+        Given a path in the market, which is a collection of token names identifying the nodes that lead from
+        A -> .. -> B,  (A = token sold by user, B = final token bought by user) it identifies the venues to 
+        visit and the sell and buy tokens for each venue.
+        It constructs the strategy graph (tokens as nodes and venues as edges). The strategy graph is a 
+        directed sub-graph of the market graph containing only the nodes and edges needed to fulfill the user order.
+        Moreover it creates the self.paths list. This list contains for a specific A -> .. -> B set of connected nodes,
+        the venues that need to be visited.
 
-        NOTE:
-          Each edge of the strategy graph will be associated to a sell_token and to a buy_token uniquely defined 
-          from the directionality of the graph. This allows to assign to each edge the proper price_function.
+        This method performs the following steps:
+        1. Initializes a split variable to handle multigraphs.
+        2. Iterates over each pair of consecutive tokens in the path.
+        3. Checks if there is an edge between the token pair in the market graph.
+        4. Gathers edge data from the market graph, including venues and liquidity information, and defines the price function
+        5. Constructs or updates the strategy graph:
+           - Gathers relevant information for each venue in the edge.
+           - Prints information if `verbose` is `True`.
+           - Updates the strategy graph, handling multigraphs by appending new variables if an edge already exists.
+        6. Checks if the multigraph is too complex and exits if it is.
+        7. Stores paths in self.paths. These are the edges, i.e. venues, that are visited along a specific coin path (A -> C -> B)
+
+        Note:
+            -Each edge of the strategy graph will be associated to a sell_token and to a buy_token uniquely defined 
+             from the directionality of the graph. This allows to assign to each edge the proper price_function.
         
         Parameters:
         -----------
@@ -210,12 +245,13 @@ class agent:
 
     def propagate_along(self, path, initial_sell_coin_amount):
         """
-        Propagates initial_sell_coin_amount through path outputting the resulting amount of coins bought
+        This function propagates an initial amount of coins sold through the chain of venues stored in path,
+        outputting the amount of coins bought at the end of path.
 
         Parameters:
         -----------
         path : list
-            The list of nodes representing the path.
+            The list of edges of the strategy graph representing the path alogn which we propagate
         initial_sell_coin_amount : float
             The initial amount of coins to sell at the beginning of the path
 
@@ -225,15 +261,32 @@ class agent:
             The final value after propagation (i.e. the amount of buy_coin of the order bought along that path)
         """
         current_value = initial_sell_coin_amount
-        prec = 1 #debbugging
         for edge_data in path:
-            current_value = edge_data['price_function'](current_value, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token']*prec)
-            current_value /= prec
+            # Call price function of this venue for the specific liquidities
+            current_value = edge_data['price_function'](current_value, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token'])
         return current_value
 
     def optimize_strategy(self):
         """
         Optimizes the strategy to maximize the order surplus
+
+        This method performs the following steps:
+        1. Calculates the worst acceptable exchange rate based on the order's limit sell and buy amounts.
+        2. Defines a surplus function to be maximized:
+            - The surplus is a function of the coins sold and bought through each path.
+            - Along each path the amount of coins bnought is obtained with the propagate_along() function.
+        3. Define Constraints:
+           - Defines constraints to ensure the total sell amount does not exceed the limit sell amount and the total buy amount meets or exceeds the limit buy amount.
+           - If the order allows partial fills, it sets an inequality constraint for the sell amount; otherwise, it sets an equality constraint for a fill-or-kill order.
+        6. Run Optimization:
+           - Uses the SLSQP method to minimize the negative surplus (maximize surplus) within the specified bounds and constraints.
+        7. Extract and Compute Results:
+           - Extracts the optimal sell amounts and computes the resulting buy amounts.
+           - Computes the coin conservation error to check for discrepancies.
+           - Prints optimization results and detailed information for each path.
+        8. Update Order and Venues Information:
+           - Updates the order with the executed sell and buy amounts.
+           - Updates the venues with the optimal sell amounts.
         
         Returns:
         --------
@@ -247,6 +300,7 @@ class agent:
         # Define the surplus function to be maximized
         def surplus(x):
             total_b = [0.0]*len(self.paths)
+            # Propagate along each path the initial amount
             for i, path in enumerate(self.paths):
                 total_b[i] += self.propagate_along(path, x[i])
             a = sum(x)
@@ -264,26 +318,25 @@ class agent:
                 total_b += self.propagate_along(path, x[i])
             return (total_b - self.order.limit_buy_amount)
         
-        #
+        # Check if continuity is preserved. Sum up swap errors obtained in each venue visited
         def coin_conservation(x,print_=False):
             error = 0
-            prec = 1 #debugging puroposes
             for i,path in enumerate(self.paths):
                 sell_amount = x[i]
                 for index, edge_data in enumerate(path):
                     string = 'with ' + str(sell_amount) +  ' buy '
                     # Compute amount bought in this edge
-                    buy_amount = edge_data['price_function'](sell_amount, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token']*prec,what_='buy')
-                    string += str(buy_amount/prec)
+                    buy_amount = edge_data['price_function'](sell_amount, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token'],what_='buy')
+                    string += str(buy_amount)
 
-                    # What is the amunt sold corresponding to this amount bought
-                    inverse_buy = edge_data['price_function'](buy_amount/prec, edge_data['liquidity_sell_token']*prec, edge_data['liquidity_buy_token'], what_='sell')
+                    # What is the amount sold corresponding to this amount bought
+                    inverse_buy = edge_data['price_function'](buy_amount, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token'], what_='sell')
                     
-                    # Check conservation error
-                    error += abs(sell_amount*prec - inverse_buy)
+                    # Updates consservation error
+                    error += abs(sell_amount - inverse_buy)
 
-                    sell_amount = buy_amount/prec
-                    string += ' inverse ' + str(inverse_buy/prec)
+                    sell_amount = buy_amount
+                    string += ' inverse ' + str(inverse_buy)
                     if print_:
                         print(string)
             return error
@@ -294,11 +347,8 @@ class agent:
             constraints = [{'type': 'ineq', 'fun': constraint_sell}]  # total_sold <= s_lim
         else: #Fly-or-kill
             constraints = [{'type': 'eq', 'fun': constraint_sell}]   # total_sold  = s_lim
-        
-
         nlc2 = NonlinearConstraint(constraint_buy, 0, np.inf)
         constraints.append(nlc2)
-
 
         print(" ")
         print("MEV Agent ready to maximize the surplus .. or at least trying :)")
@@ -309,7 +359,7 @@ class agent:
         # Bounds for the sell amount through each path
         bounds = Bounds([0.0] * len(self.paths), [self.order.limit_sell_amount] * len(self.paths))
 
-
+        # Maximize the surplus
         result = minimize(surplus, initial_guess, method='SLSQP', bounds=bounds, constraints=constraints)
 
 

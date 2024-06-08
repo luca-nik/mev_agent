@@ -51,7 +51,7 @@ class venue:
         
         Returns:
         --------
-        venue
+        venue: venue class
             An instance of the venue class.
         """
         reserves = {token: np.float64(data[token].replace("_", ".")) for token in data}

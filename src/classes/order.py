@@ -138,6 +138,7 @@ class order:
 
         output = json.dumps(order_data, indent=4)
 
+        # If requested write a file, otherwise print to screen the information
         if file:
             with open(file, 'w') as f:
                 f.write(output)

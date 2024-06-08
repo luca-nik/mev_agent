@@ -5,8 +5,13 @@ import sys
 
 class market:
     """
-    A class to represent a market of trading venues as a non-directed graph
+    A class to represent a market of trading venues as a non-directed multi-graph.
+    The edges of this non-directed graph contain venues information, while the nodes
+    are the coin pairs that can be swapped in such venues.
     
+    Note:
+        - This class is not developed to treat multi-assets liquidity pools!
+
     Attributes:
     -----------
     venues : list
@@ -39,14 +44,23 @@ class market:
 
     def generate_graph(self):
         """
-        Generates a graph from the venues and prints the name of each edge.
+        Generates the market graph from the market venues and token pairs
+
+        This method performs the following steps:
+        1. Iterates over the venues to add tokens as nodes in the graph.
+        2. Creates edges between tokens based on the venues' reserves.
+        3. If an edge between two tokens already exists, it updates the edge's attributes
+           with additional venue information -- multigraph
+        4. If an edge does not exist, it creates a new edge with the venue's name and
+           reserve information as attributes.
         """
+        # Create nodes with the tokens
         for venue in self.venues:
             for token, amount in venue.reserves.items():
                 if token not in self.graph:
                     self.graph.add_node(token)
 
-        # Create graph
+        # Create edges with the venues in the market
         for venue in self.venues:
             tokens = list(venue.reserves.keys())
             for i in range(len(tokens)):
@@ -55,7 +69,7 @@ class market:
                     token2 = tokens[j]
                     # Check if edge exists already
                     if self.graph.has_edge(token1, token2):
-                        # If edge already exists, update the 'venues' attribute
+                        # If edge already exists, update the 'venues' attribute - multigraph
                         self.graph[token1][token2]['venues'].append(venue.name)
                         self.graph[token1][token2]['tokens'].append([token1,token2])
                         self.graph[token1][token2]['liquidity_token1'].append(venue.reserves[token1])
@@ -115,6 +129,12 @@ class market:
         Calculate the amount of tokens bought in a specific liquidity pool given the sell amount, the type of
         Automated Market Maker (AMM) of the pool, and the initial liquidities of the buy and sell tokens.
 
+        Note:
+            - The formula for bought b tokens of Bgiven the amount a of A tokens sold is
+              b = [B]a/([A] + a), where [A], [B] are the liquidities of tokens A and B
+              respectively.
+            - We are not considering any fee for the liquidity providers
+
         Parameters
         ----------
         coin_amount : int
@@ -142,14 +162,13 @@ class market:
         ValueError
             If an unsupported market type is provided.
         """
-        prec = 1
         if market_type == 'constant_product':
             if what_ == 'buy': 
-                buy_amount = prec*liquidity_buy_token * (coin_amount/ (liquidity_sell_token + coin_amount))
-                return buy_amount/prec
+                buy_amount = liquidity_buy_token * (coin_amount/ (liquidity_sell_token + coin_amount))
+                return buy_amount
             if what_ == 'sell':
-                sell_amount = -prec*liquidity_sell_token * (-coin_amount / (liquidity_buy_token - coin_amount))
-                return sell_amount/prec
+                sell_amount = -liquidity_sell_token * (-coin_amount / (liquidity_buy_token - coin_amount))
+                return sell_amount
         else:
             raise ValueError(f"Unsupported market type: {market_type}")
 
