@@ -9,7 +9,7 @@ Where `input.json` is one of the three inputs provided.
 In this case the keyword `partial_fill = false` in all the user orders, thus we are in a *Fly-or-kill* situation.
 
 
-In the following I report the solutions I obtained emplyoing my protocol and my program.
+In the following, I report the solutions I obtained employing my protocol and my program.
 
 ### First input
 ```console
