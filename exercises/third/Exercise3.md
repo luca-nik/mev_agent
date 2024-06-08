@@ -138,3 +138,7 @@ Interestingly, adding the `METEORA_USDC_USDT` to the market graph (with the liqu
 #### A question for you
 Since I am new to the crypto world, I might have misunderstood something. Is it really possible to exploit such an arbitrage opportunity and come back with more USDC than before, basically for free, or am I losing something here? I mean my concern is regarding the fact that although the price of the USDC and USDT should be bound to the value of the US dollar, due to liquidity unbalances in the pool, the price of one token with respect to the other is significantly lower when swapping them. I know that this is the basis for arbitrage, but I was questioning if I was not mistaken or if I was not considering something (maybe the price function of the AMM is different from the standard constant product and keeps track of their value with respect to the dollar, ...).
 Sorry for the naive question, but I was just curious :).
+
+Go back to [First Exercise](../first/Exercise1.md)
+
+Go back to [Second Exercise](../secon/Exercise2.md)
