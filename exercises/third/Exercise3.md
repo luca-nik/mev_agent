@@ -141,4 +141,4 @@ Sorry for the naive question, but I was just curious :).
 
 Go back to [First Exercise](../first/Exercise1.md)
 
-Go back to [Second Exercise](../secon/Exercise2.md)
+Go back to [Second Exercise](../second/Exercise2.md)
