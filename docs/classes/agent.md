@@ -52,34 +52,6 @@ Given a path in the market, identifies the venues to visit and the sell and buy 
   - `market`: The market object containing the graph of tokens and venues.
   - `verbose`: (Optional) Prints additional information. Default is `False`.
 
-## Method Steps
-
-This method performs the following steps:
-
-1. **Calculate Worst Acceptable Exchange Rate**:
-   - Based on the order's limit sell and buy amounts.
-
-2. **Define a Surplus Function**:
-   - The surplus is a function of the coins sold and bought through each path.
-   - Along each path, the amount of coins bought is obtained with the `propagate_along()` function.
-
-3. **Define Constraints**:
-   - Ensures the total sell amount does not exceed the limit sell amount and the total buy amount meets or exceeds the limit buy amount.
-   - If the order allows partial fills, sets an inequality constraint for the sell amount; otherwise, sets an equality constraint for a fill-or-kill order.
-
-4. **Run Optimization**:
-   - Uses the SLSQP method to minimize the negative surplus (maximize surplus) within the specified bounds and constraints.
-
-5. **Extract and Compute Results**:
-   - Extracts the optimal sell amounts and computes the resulting buy amounts.
-   - Computes the coin conservation error to check for discrepancies.
-   - Prints optimization results and detailed information for each path.
-
-6. **Update Order and Venues Information**:
-   - Updates the order with the executed sell and buy amounts.
-   - Updates the venues with the optimal sell amounts.
-
-
 ### `plot_strategy()`
 
 Plots the strategy graph using matplotlib.
