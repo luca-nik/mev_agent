@@ -420,10 +420,13 @@ class agent:
     def update_venues(self, optimal_coins_sell):
         """
         Updates the venues' reserves based on the optimal coins to sell along each path.
-
         This method iterates through each path and updates the reserves of the venues involved 
         in the transactions. It calculates the new reserves after selling a specified amount of 
         coins and propagates the outcome of each transaction through the path.
+
+        Note:
+            - The values bought in each venue are not stored in memory, thus in this procedure
+              we have to iterate along each path.
 
         Parameters:
         -----------
@@ -438,22 +441,25 @@ class agent:
         - Adds 'ex_sell_amount' and 'ex_buy_amount' keys to the `reserves` dictionary of the 
           respective venues to reflect the external sell and buy amounts for each transaction.
         """
+        # Cycle over paths 
         for i,path in enumerate(self.paths):
             current_value = optimal_coins_sell[i]
+            # Get venues in the paths
             for edge_data in path:
-
-                # Get and update the correct venue information
+                # Select the correct venue that we are meeting in this edge of the path
                 venue_name = edge_data['venue']
                 for v,venue in enumerate(self.venues):
                     if venue.name == venue_name:
                         break
 
+                # Update venue information
                 venue.reserves[edge_data['sell_token']] += current_value
                 venue.reserves['ex_buy_amount'] = current_value
 
                 # Propagate and get outcome of transaction
                 current_value = edge_data['price_function'](current_value, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token'])
 
+                # Update venue information
                 venue.reserves[edge_data['buy_token']] -= current_value
                 venue.reserves['ex_sell_amount'] = current_value
                 venue.reserves['sell_token'] = edge_data['buy_token']
