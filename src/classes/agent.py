@@ -7,37 +7,60 @@ import numpy as np
 import json
 
 class agent:
+    class agent:
     """
     A class to represent a market agent that reads the user intent, reads the market
     and formulates the optimal MEV strategy.
-    
+
     Attributes:
     -----------
     order : order
-        A order object to store the current order information.
+        An order object to store the current order information.
     venues : list
         A list containing venue instances.
     strategy : nx.DiGraph
-        A directed graph to store the paths from sell_token to buy_token, we call it strategy
+        A directed graph to store the paths from sell_token to buy_token, called strategy.
     paths : list
-        A list of the paths from sell_token to buy_token
-    
+        A list of the paths from sell_token to buy_token.
+
     Methods:
     --------
-    read_order(order):
+    __init__():
+        Constructs all the necessary attributes for the agent object.
+
+    read_order(Order):
         Reads an order object and stores the associated information.
+
     print_order():
         Prints the current order information.
-    read_market(market, verbose):
-        Reads the market graph and given the user order, it calls make_strategy to identify the correct paths
-    make_strategy(path, market, verbose):
-        Construct the directed graph called strategy, storing all path information and connected price_functions
+
+    read_market(market, verbose=True):
+        Evaluates paths in the market connecting sell_token with buy_token of the current order.
+        Identifies the venues to visit and the sell and buy tokens for each venue.
+        Calls make_strategy() to create the strategy graph and the paths the agent needs to follow.
+
+    make_strategy(path, market, verbose=False):
+        Given a path in the market, identifies the venues to visit and the sell and buy tokens for each venue.
+        Constructs the strategy graph (tokens as nodes and venues as edges) and creates the self.paths list.
+
     plot_strategy():
         Plots the strategy graph using matplotlib.
+
     propagate_along(path, initial_sell_coin_amount):
-        Propagates initial_sell_coin_amount through path outputting the resulting amount of coins bought
-        
+        Propagates an initial amount of coins sold through the chain of venues stored in path,
+        outputting the amount of coins bought at the end of the path.
+
+    optimize_strategy():
+        Optimizes the strategy to maximize the order surplus by defining a surplus function to be maximized,
+        setting constraints, and using the SLSQP method to find the optimal solution.
+
+    update_venues(optimal_coins_sell):
+        Updates the venues' reserves based on the optimal coins to sell along each path.
+
+    print_results(file=None):
+        Prints the result of the surplus maximization, either to the console or to a specified file.
     """
+
 
     def __init__(self):
         """

@@ -8,67 +8,78 @@
 
 ### `load_data(file_path)`
 
-Load data from a JSON file.
+Loads data from a JSON file.
 
-**Parameters:**
-- `file_path` (str): The path to the JSON file.
+- **Parameters**:
+  - `file_path` (str): The path to the JSON file.
 
-**Returns:**
-- `dict`: The loaded data from the JSON file.
-
-**Raises:**
-- `FileNotFoundError`: If the specified file is not found.
-- `json.JSONDecodeError`: If there is an error decoding the JSON data.
+- **Returns**:
+  - `data` (dict): The loaded data from the JSON file.
 
 ### `create_order(data)`
 
-Create an `order` instance from the loaded JSON data.
+Creates a list of `Order` instances from the loaded JSON data.
 
-**Parameters:**
-- `data` (dict): The loaded JSON data.
+- **Parameters**:
+  - `data` (dict): The loaded JSON data.
 
-**Returns:**
-- `order`: An `order` instance.
+- **Returns**:
+  - `Order` (order instance): An `Order` object containing user intent.
+
+- **Note**:
+  - This function processes only one user intent per call.
 
 ### `create_venues(data)`
 
-Create a list of `venue` instances from the loaded JSON data.
+Creates a list of `Venue` instances from the loaded JSON data.
 
-**Parameters:**
-- `data` (dict): The loaded JSON data.
+- **Parameters**:
+  - `data` (dict): The loaded JSON data.
 
-**Returns:**
-- `list`: A list of `venue` instances.
+- **Returns**:
+  - `Venues` (list): A list of `Venue` instances.
 
-### `main(file_path)`
+### `main(file_path, plot_strategy=False, verbose=False)`
 
-Main function to optimize the surplus given the orders and the venues in the JSON file.
+The main function of the project. It maximizes the surplus and creates an output JSON file.
 
-**Parameters:**
-- `file_path` (str): The path to the JSON file.
+- **Parameters**:
+  - `file_path` (str): The path to the JSON file.
+  - `plot_strategy` (bool, optional): If `True`, plots the strategy graph. Default is `False`.
+  - `verbose` (bool, optional): If `True`, prints additional verbose information. Default is `False`.
 
-## Example Usage
+- **Process**:
+  1. Fetches intent content from the specified JSON file.
+  2. Creates order and venues objects from the data collected.
+  3. Creates the market graph from the venues information.
+  4. Creates an agent that reads the order and the market, and creates the directed strategy graph containing all simple paths in the market that fulfill the order intent.
+  5. Optimizes the strategy to maximize the surplus under the constraints identified by the user order.
+  6. Creates an updated output JSON file.
 
-```python
-import sys
-import os
-import argparse
-import json
-from matplotlib import pyplot as plt
+### `add_venue_to_json(url, token1, token2, json_file, delete_tmp=True)`
 
-# Add the src directory to the system path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
+Extracts liquidity data for specified tokens from a given URL and updates a JSON file with this information.
 
-from classes import order, venue, market, agent
-import mev_project_interface as interface
+- **Parameters**:
+  - `url` (str): The URL to fetch data from.
+  - `token1` (str): The string of the first token.
+  - `token2` (str): The string of the second token.
+  - `json_file` (str): The path to the JSON intent file to be updated.
+  - `delete_tmp` (bool, optional): Flag indicating whether to delete the temporary HTML file after processing. Defaults to `True`.
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Process a JSON file path.')
-    parser.add_argument('file_path', type=str, nargs='?', default=None, help='Path to the JSON file')
-    args = parser.parse_args()
+- **Process**:
+  1. Fetches HTML content from the specified URL.
+  2. Parses the HTML to extract liquidity values for the specified tokens.
+  3. Updates the JSON file with the extracted liquidity values under a new venue name.
+  4. Deletes the temporary HTML file if `delete_tmp` is set to `True`.
 
-    if args.file_path is None:
-        print("Error: No file path provided. Please provide the path to the JSON file.")
-        sys.exit(1)
+- **Note**:
+  - The function assumes that the token liquidity values can be found in the HTML content with the format 'pooled {token} is {value}'.
+  - The function handles the precision of token values by formatting them to 18 decimal places and replacing '.' with '_'.
 
-    interface.main(args.file_path)
+## Usage
+
+To run the main function, use the following command:
+
+```sh
+python script_name.py --file_path <path_to_json> [--plot_strategy] [--verbose]
