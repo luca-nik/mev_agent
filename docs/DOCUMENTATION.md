@@ -13,7 +13,8 @@ This documentation provides details on the various pieces of the MEV code.
 5. From the user intent and the market graph, `agent` determines the connected token pairs that allow to perform the user requested trade;
 6. The agent creates the directed multi-graph connecting requested sell token A to requested buy token B. This is stored in `agent.strategy`;
 7. The agent now creates a set of paths, each of which is a list of the edges (i.e. the venues) that need to be visited along a simple path connecting A with B. The price function of the edge now can be determined since the direction of token swap is known;
-8. Having the list of simple paths to walk, the agent runs `optimize_strategy()`. This procedure creates a vector `x` of dimension `N` whcih is the number of simple paths connecting `A` to `B`. 
+8. Having the list of simple paths to walk, the agent runs `optimize_strategy()`. This procedure creates a vector `x` of dimension `N` which is the number of simple paths connecting `A` to `B`. Defines the surplus function and the constraint functions. The surplus function is built in such a way that `agent` propagates the i-th `x` component through the i-th path and obtaines the i-th component of the bought `b` vector. The surplus is then obtained with the standard formula `Γ(x) = sum(b(x)) - sum(x)/π`. The surplus is optimized thanks to scipy.minimize.
+9. The optimal `x` maximizing the surplus under the constrained defined by the user is then used to update venue information and to compute the coin conservation error.
     
 
 
