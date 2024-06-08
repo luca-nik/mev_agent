@@ -1,10 +1,10 @@
 # My solutions to Exercise 2
 
-In this exercise I choose to swap the token pair `USDT`/`USDC`.
+In this exercise, I choose to swap the token pair `USDT`/`USDC`.
 
-For the reserves I considered a [liquidity pool on Uniswap](https://v2.info.uniswap.org/pair/0x3041cbd36888becc7bbcbc0045e3b1f144466f5f) in date 7 June 2024.
+For the reserves, I considered a [liquidity pool on Uniswap](https://v2.info.uniswap.org/pair/0x3041cbd36888becc7bbcbc0045e3b1f144466f5f) on the date 7 June 2024.
 
-In the following the JSON file of the input provided to the `maximize_mev.py` code.
+In the following, the JSON file of the input is provided to the `maximize_mev.py` code.
 
 ```json
 {
