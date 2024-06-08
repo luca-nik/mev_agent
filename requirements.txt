@@ -2,9 +2,5 @@ matplotlib
 networkx
 numpy
 scipy
-sys
-json
-re
 requests
-bs4
-argparse
+beautifulsoup4
