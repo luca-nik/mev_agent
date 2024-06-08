@@ -348,14 +348,15 @@ class agent:
                 sell_amount = x[i]
                 for index, edge_data in enumerate(path):
                     string = 'with ' + str(sell_amount) +  ' buy '
-                    # Compute amount bought in this edge
+
+                    # Compute amount bought in this edge with this amount of coins sold
                     buy_amount = edge_data['price_function'](sell_amount, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token'],what_='buy')
                     string += str(buy_amount)
 
                     # What is the amount sold corresponding to this amount bought
                     inverse_buy = edge_data['price_function'](buy_amount, edge_data['liquidity_sell_token'], edge_data['liquidity_buy_token'], what_='sell')
                     
-                    # Updates consservation error
+                    # Updates conservation error
                     error += abs(sell_amount - inverse_buy)
 
                     sell_amount = buy_amount
