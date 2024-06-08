@@ -42,7 +42,7 @@ With `N` being the number of simple paths connecting `token1` with `token2` in t
 In case the keyword `partial_fill = false` is in the user order, the condition for the total amount of coins sold will be strict equality (*Fly-or-kill* situation).
 
 <div align="center">
-  <img src="docs/images/example_strategy-paths.png" alt="Diagram" tyle="width: 80%;">
+  <img src="docs/images/example_strategy-paths.png" alt="Diagram" style="width: 80%;">
   <p style="margin-top: 10px;">Example of a strategy graph where the coins sold and bought along the different channels are highlighted.</p>
 </div>
 
