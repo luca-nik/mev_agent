@@ -77,7 +77,7 @@ The surplus generated is 100_863301171706666537
 ```
 
 ## Discussion
-The code I am running in this exercise is the same of the previous. Thus, we are trying to maximize the surplus along all the simlpe paths connecting `USDC`/`USDT`, which in this case is just one. 
+The code I am running in this exercise is the same as the previous one. Thus, we are trying to maximize the surplus along all the simple paths connecting `USDC`/`USDT`, which in this case is just one. 
 Given the almost equal liquidity of the two tokens in the `UNISWAP_USDC_USDT` pool at the time I gathered the data, the amount of `USDC` tokens bought is not extremely high.
 
 However, this is an ideal condition. 
@@ -93,11 +93,10 @@ In real AMM models, the price function is often influenced by more complex algor
 Another important factor to consider is price slippage. By the time the transaction order I intend to perform is processed by the miners or the block containing our transaction is validated, the price of at least one of the assets in the path connecting `USDT` to `USDC` might have changed. This can result in a different executed buy amount than what was initially expected. Slippage is more significant in volatile markets or with large order sizes relative to the liquidity available in the pool.
 
 ### Other Users
-Other market participants can also largely influence the outcome. The order the transactions are inseted in a specific block, might once again cause price slippage. In additon to this, miners can identify MEV opportunities 
-and leveraging trades censorship, frontrunning or sandwitch attack they can significantly impact the price and execution of a swap. For instance, a frontrunner might detect a large swap and place their transaction before it to profit from the expected price movement, resulting in a worse price for the original transaction.
+Other market participants can also largely influence the outcome. The order in the transactions is inserted in a specific block, which might once again cause price slippage. In addition to this, miners can identify MEV opportunities 
+and leveraging trade censorship, frontrunning, or sandwich attacks they can significantly impact the price and execution of a swap. For instance, a frontrunner might detect a large swap and place the transaction before it to profit from the expected price movement, resulting in a worse price for the original transaction.
 
 ### Gas Fees
-Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability. In addition to this, MEV bots identifying possible profitable trades, might start competing effectively startgin a gas-auction, and congesting the network. 
-
+Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability. In addition to this, MEV bots identifying possible profitable trades might start competing effectively starting a gas-auction, and congesting the network. 
 
 Go to [third exercise](../third/Exercise3.md) ...
