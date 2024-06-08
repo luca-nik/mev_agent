@@ -42,6 +42,21 @@ Evaluates paths in the market connecting `sell_token` with `buy_token` of the cu
 - **Parameters**:  
   - `market`: The market object containing the graph of tokens and venues.
   - `verbose`: (Optional) Print additional information. Default is `True`.
+ 
+- **Process**:
+  1. Initializes a split variable to handle multigraphs.
+  2. Iterates over each pair of consecutive tokens in the path.
+  3. Checks if there is an edge between the token pair in the market graph.
+  4. Gathers edge data from the market graph, including venues and liquidity information, and defines the price function.
+  5. Constructs or updates the strategy graph:
+     - Gathers relevant information for each venue in the edge.
+     - Prints information if `verbose` is `True`.
+     - Updates the strategy graph, handling multigraphs by appending new variables if an edge already exists.
+  6. Checks if the multigraph is too complex and exits if it is.
+  7. Stores paths in `self.paths`. These are the edges, i.e., venues, that are visited along a specific coin path (A -> C -> B).
+
+- **Note**:
+  - Each edge of the strategy graph will be associated with a `sell_token` and a `buy_token` uniquely defined from the directionality of the graph. This allows assigning to each edge the proper `price_function`
 
 ### `make_strategy(path, market, verbose=False)`
 
@@ -52,23 +67,23 @@ Given a path in the market, identifies the venues to visit and the sell and buy 
   - `market`: The market object containing the graph of tokens and venues.
   - `verbose`: (Optional) Prints additional information. Default is `False`.
  
-**process**
-        1. Calculates the worst acceptable exchange rate based on the order's limit sell and buy amounts.
-        2. Defines a surplus function to be maximized:
-            - The surplus is a function of the coins sold and bought through each path.
-            - Along each path the amount of coins bnought is obtained with the propagate_along() function.
-        3. Define Constraints:
-           - Defines constraints to ensure the total sell amount does not exceed the limit sell amount and the total buy amount meets or exceeds the limit buy amount.
-           - If the order allows partial fills, it sets an inequality constraint for the sell amount; otherwise, it sets an equality constraint for a fill-or-kill order.
-        6. Run Optimization:
-           - Uses the SLSQP method to minimize the negative surplus (maximize surplus) within the specified bounds and constraints.
-        7. Extract and Compute Results:
-           - Extracts the optimal sell amounts and computes the resulting buy amounts.
-           - Computes the coin conservation error to check for discrepancies.
-           - Prints optimization results and detailed information for each path.
-        8. Update Order and Venues Information:
-           - Updates the order with the executed sell and buy amounts.
-           - Updates the venues with the optimal sell amounts.
+- **Process**:
+  1. Calculates the worst acceptable exchange rate based on the order's limit sell and buy amounts.
+  2. Defines a surplus function to be maximized:
+     - The surplus is a function of the coins sold and bought through each path.
+     - Along each path, the amount of coins bought is obtained with the `propagate_along()` function.
+  3. Defines constraints:
+     - Ensures the total sell amount does not exceed the limit sell amount and the total buy amount meets or exceeds the limit buy amount.
+     - If the order allows partial fills, sets an inequality constraint for the sell amount; otherwise, sets an equality constraint for a fill-or-kill order.
+  4. Runs optimization:
+     - Uses the SLSQP method to minimize the negative surplus (maximize surplus) within the specified bounds and constraints.
+  5. Extracts and computes results:
+     - Extracts the optimal sell amounts and computes the resulting buy amounts.
+     - Computes the coin conservation error to check for discrepancies.
+     - Prints optimization results and detailed information for each path.
+  6. Updates order and venues information:
+     - Updates the order with the executed sell and buy amounts.
+     - Updates the venues with the optimal sell amounts.
 
 
 ### `plot_strategy()`
