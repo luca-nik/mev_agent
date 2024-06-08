@@ -1,4 +1,4 @@
-# My solutions to Exercise 2
+# My Solution to Exercise 2
 
 In this exercise, I choose to swap the token pair `USDT`/`USDC`.
 
