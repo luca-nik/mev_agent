@@ -123,12 +123,15 @@ While creating the `mev_agent.strategy` graph, for each pair of nodes connected 
 
 Nevertheless, the problem of counting simple paths in directed multigraph is rather interesting. If I would have to exchange token `A` with `B` passing through `C`, the possible independent paths connecting `A`/`B` will be dependent on the numbers `N`, `M` of multiple paths connecting `A`/`C` (`N`) and `C`/`B` (`M`). The total number of available paths in this case will be `T = M*N`. However, also this is again a rough oversimplification of the problem which is combinatorial by nature and gets exteremely comlex as the dimension of the graph starts increasing. 
 
-In additon to this, moreover, even if the directed graph wouldn't have mutlti-edged connected vertices, the problem of simple paths detection from `A` to `B` is extremely complex ([#P-complete](https://epubs.siam.org/doi/abs/10.1137/0208032)), and requires [complex numerical techniques](https://arxiv.org/pdf/2103.06102) to be solved efficiently.
+In additon to this, even if the directed graph wouldn't have mutlti-edged connected vertices, the problem of simple paths detection from `A` to `B` is extremely complex ([#P-complete](https://epubs.siam.org/doi/abs/10.1137/0208032)), and requires [complex numerical techniques](https://arxiv.org/pdf/2103.06102) to be solved efficiently.
 
-In addition to this, in these exercises we never considered multi-assets venues, which would imply more complex graphs, and for which the price functions could change during propagation. Indeed, if we consider a multi asset pool, with tokens `A`,`B`, and `C`, it can happen that the price function `c(a)` might change if I first visited this venue but along a different edge of the graph e.g. `A`/`B`. 
+Moreover, in these exercises we never considered multi-assets venues, which would imply more complex graphs, and for which the price functions could change during propagation. Indeed, if we consider a multi asset pool, with tokens `A`,`B`, and `C`, it can happen that the price function `c(a)` might change if I first visited this venue but along a different edge of the graph e.g. `A`/`B`. 
 Another source of additional complexity is the possibility that the graph changes through time. Indeed, it might be possible that new venues are added to the market effectively introducing new connections among the nodes.
 
-git 
+Aside from these considerations about the network complexity, a MEV agent should be able to perform the surplus optimization also accounting for multiple user orders (which is not implemented in this simple program I developed), should be capable of evaluating order books to indentify possible optimal swaps or ring trades.
+
+In short, considering all these factors, our little code appears tiny and a bit silly under this mountain of complexity :)
+
 
 ### Results
 Interestingly, adding the `METEORA_USDC_USDT` to the market graph (with the liquidities at the time I exectuted the code) has allowed to increase the surplus of a factor ~58. This could be a rather interesting example where arbitrage could be exploited, buying `USDT` from `METEORA_USDC_USDT`, selling them back for `USDC` in `UNISWAP_USDC_USDT`.
