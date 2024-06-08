@@ -93,7 +93,7 @@ In real AMM models, the price function is often influenced by more complex algor
 Another important factor to consider is price slippage. By the time the transaction order I intend to perform is processed by the miners or the block containing our transaction is validated, the price of at least one of the assets in the path connecting `USDT` to `USDC` might have changed. This can result in a different executed buy amount than what was initially expected. Slippage is more significant in volatile markets or with large order sizes relative to the liquidity available in the pool.
 
 ### Other Users
-Other market participants can also largely influence the outcome. The order in the transactions is inserted in a specific block, which might once again cause price slippage. In addition to this, miners can identify MEV opportunities 
+Other market participants can also largely influence the outcome. The order in the transactions is inserted in a specific block, which might once again cause price slippage. In addition to this, block proposers can identify MEV opportunities 
 and leveraging trade censorship, frontrunning, or sandwich attacks they can significantly impact the price and execution of a swap. For instance, a frontrunner might detect a large swap and place the transaction before it to profit from the expected price movement, resulting in a worse price for the original transaction.
 
 ### Gas Fees
