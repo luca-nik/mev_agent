@@ -108,6 +108,25 @@ Optimizes the strategy to maximize the order surplus by defining a surplus funct
 - **Returns**:  
   - `tuple`: The optimal sell amounts and the resulting buy amounts.
 
+- **Process**:
+  1. Calculates the worst acceptable exchange rate based on the order's limit sell and buy amounts.
+  2. Defines a surplus function to be maximized:
+     - The surplus is a function of the coins sold and bought through each path.
+     - Along each path, the amount of coins bought is obtained with the `propagate_along()` function.
+  3. Defines constraints:
+     - Ensures the total sell amount does not exceed the limit sell amount and the total buy amount meets or exceeds the limit buy amount.
+     - If the order allows partial fills, sets an inequality constraint for the sell amount; otherwise, sets an equality constraint for a fill-or-kill order.
+  4. Runs optimization:
+     - Uses the SLSQP method to minimize the negative surplus (maximize surplus) within the specified bounds and constraints.
+  5. Extracts and computes results:
+     - Extracts the optimal sell amounts and computes the resulting buy amounts.
+     - Computes the coin conservation error to check for discrepancies.
+     - Prints optimization results and detailed information for each path.
+  6. Updates order and venues information:
+     - Updates the order with the executed sell and buy amounts.
+     - Updates the venues with the optimal sell amounts.
+
+
 ### `update_venues(optimal_coins_sell)`
 
 Updates the venues' reserves based on the optimal coins to sell along each path.
