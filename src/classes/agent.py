@@ -365,7 +365,7 @@ class agent:
         # Update venues information
         self.update_venues(optimal_coins_sell)
 
-        return optimal_coins_sell, optimal_coins_buy, total_buy 
+        return optimal_coins_sell, optimal_coins_buy
         
     def update_venues(self, optimal_coins_sell):
         """
