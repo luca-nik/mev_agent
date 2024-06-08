@@ -97,7 +97,7 @@ Other market participants can also largely influence the outcome. The order in t
 and leveraging trade censorship, frontrunning, or sandwich attacks they can significantly impact the price and execution of a swap. For instance, a frontrunner might detect a large swap and place the transaction before it to profit from the expected price movement, resulting in a worse price for the original transaction.
 
 ### Gas Fees
-Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability. In addition to this, MEV bots identifying possible profitable trades might start competing effectively starting a gas-auction, and congesting the network. 
+Finally, gas fees are a crucial consideration in executing swaps on Ethereum. High gas fees can make small trades unprofitable or reduce the net gain from arbitrage opportunities. Additionally, during times of network congestion, gas fees can spike, making it more expensive to execute swaps and affecting the overall profitability. Network congestion can also be caused by MEV bots identifying possible profitable trades and start competing in [priority gas-auctions](https://arxiv.org/abs/1904.05234).
 
 Go to [Third Exercise](../third/Exercise3.md) ...
 
