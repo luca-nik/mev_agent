@@ -7,7 +7,6 @@ import numpy as np
 import json
 
 class agent:
-    class agent:
     """
     A class to represent a market agent that reads the user intent, reads the market
     and formulates the optimal MEV strategy.
