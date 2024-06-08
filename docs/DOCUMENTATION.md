@@ -6,7 +6,7 @@ This documentation provides details on the various pieces of the MEV code.
 -  [classes](CLASSES.md): to know more about the classes employed in the project and how do they work, get a look at 
 
 ## Brief explaination of how does the code work
-1. Read the User intent and store the information of the required transaction in the `user` object;
+1. Read the User intent and store the information of the required transaction in the [user](classes/user.md) object;
 2. Read the Venues and store them in a list of `venue` objects;
 3. Create a `market` oject representing the non-directed graph. The edges are the coins present in the liquidity pools, whereas the edges are the venues. Edges store information about the venue and the liquidity of each token. Moreover we also endow each edge with a price function. Before using such price funxiton, however, we will need to assess the direction of exchange of coins in the pool;
 4. Create a MEV agent `agent` object. This object then reads the `user` intent and the `market` graph;
