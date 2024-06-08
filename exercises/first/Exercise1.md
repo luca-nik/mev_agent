@@ -218,13 +218,13 @@ The surplus generated is 401_146505249528900094
 </div>
 
 ## Discussion
-In this exercise we are considering a constant product AMM with zero gas-fees. The price function will thus be b(x) = xB/(A+x)
+In this exercise, we are considering a constant product AMM with zero gas-fees. The price function will thus be b(x) = xB/(A+x)
 
-Regarding my results, numerical error is hindering the precision of the results, providing a coin conservation error in the order of 10**-13.
+Regarding my results, the numerical error is hindering the precision of the results, providing a coin conservation error in the order of 10**-13.
 
-This is for sure an error of my procedure. Maybe I should enforce global coin conservation, although I might be concerned with the convexity of such constraint.
+This is for sure an error in my procedure. Maybe I should enforce global coin conservation, although I might be concerned with the convexity of such constraint.
 
-Regarding the advantages of this procedure is that it is extremely fast since we are not searching for a gloabl minimum on a rough surface, but rather we just need to find the minimum of such convex problem. (We are minimizing -surplus).
+The advantage of this procedure is that it is extremely fast since we are not searching for a global minimum on a rough surface, but rather we just need to find the minimum of such a convex problem. (We are minimizing -surplus).
 Something that has to be noticed is that in all cases we are actually enforcing to sell the complete amount of coins (this is due to the keyword `partial_fill`). In this case, we might not hit the absolute maximum of the surplus.
 
 ## Conclusions
