@@ -53,7 +53,7 @@ Since the [forward-routing problem is convex](https://hal.science/hal-03455981/f
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/nicoli-luca/mev_agent.git
+    git clone https://github.com/luca-nik/mev_agent.git
     cd mev_agent
     ```
 
