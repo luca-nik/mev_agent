@@ -34,7 +34,7 @@
             "min_receive_amount": 1,
             "expiration": 70,
             "status": "pending",
-            "source_token_deciAmals": 5,
+            "source_token_decimals": 5,
             "destination_token_decimals": 5}
     }
 }
