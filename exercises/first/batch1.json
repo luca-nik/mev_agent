@@ -4,7 +4,7 @@
             "intent_id": "1",
             "source_token": "A",
             "source_address": "source_1",
-            "source_amount": 10,
+            "source_amount": 8,
             "destination_token": "B",
             "destination_address": "dest_1",
             "min_receive_amount": 1,
