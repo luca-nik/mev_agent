@@ -1,4 +1,4 @@
-# MEV agent for the forward routing problem
+# MEV agent for a forward routing problem
 <div align="center">
   <img src="docs/images/mev_agent.png" alt="Diagram" style="width: 50%; height: 50%;">
 </div>
